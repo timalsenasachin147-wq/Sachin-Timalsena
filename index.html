@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html class="light scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Sachin Timalsena | Strategic Finance & ACCA Candidate</title>
+  <meta name="description" content="Portfolio of Sachin Timalsena - ACCA Candidate & BBS Student specializing in Financial Modeling, Data Analysis, and Strategic Accounting." />
+
+  <!-- Google Fonts: Source Serif 4 & Work Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Work+Sans:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Tailwind Configuration matching the Stitch Design System -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#970000",
+            "primary-container": "#c40000",
+            "primary-fixed": "#ffdad4",
+            "primary-fixed-dim": "#ffb4a8",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#ffd1ca",
+            "on-primary-fixed": "#410000",
+            "on-primary-fixed-variant": "#930000",
+
+            "surface": "#f7fafc",
+            "surface-dim": "#d7dadc",
+            "surface-bright": "#f7fafc",
+            "surface-variant": "#e0e3e5",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f1f4f6",
+            "surface-container": "#ebeef0",
+            "surface-container-high": "#e5e9eb",
+            "surface-container-highest": "#e0e3e5",
+
+            "on-surface": "#181c1e",
+            "on-surface-variant": "#5d3f3b",
+            "on-background": "#181c1e",
+
+            "secondary": "#555f71",
+            "secondary-container": "#d6e0f6",
+            "secondary-fixed": "#d9e3f9",
+            "secondary-fixed-dim": "#bdc7dc",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#596376",
+            "on-secondary-fixed": "#121c2c",
+            "on-secondary-fixed-variant": "#3d4759",
+
+            "tertiary": "#3b495d",
+            "tertiary-container": "#526176",
+            "tertiary-fixed": "#d4e4fc",
+            "tertiary-fixed-dim": "#b8c8e0",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#cddcf5",
+            "on-tertiary-fixed": "#0d1c2e",
+            "on-tertiary-fixed-variant": "#39485c",
+
+            "inverse-surface": "#1e2225",
+            "inverse-on-surface": "#eef1f3",
+            "inverse-primary": "#ffb4a8",
+
+            "outline": "#926f69",
+            "outline-variant": "#e7bdb6",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.375rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          maxWidth: {
+            "container-max": "1140px"
+          },
+          fontFamily: {
+            "headline": ["'Source Serif 4'", "serif"],
+            "body": ["'Work Sans'", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom utility styles */
+    body {
+      font-family: 'Work Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    h1, h2, h3, h4, .font-serif-title {
+      font-family: 'Source Serif 4', Georgia, serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    .accent-border-left {
+      border-left: 4px solid #970000;
+    }
+
+    .accent-underline {
+      position: relative;
+      display: inline-block;
+    }
+    .accent-underline::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 48px;
+      height: 3px;
+      background-color: #970000;
+      border-radius: 2px;
+    }
+
+    .skill-chip {
+      background-color: #e5e9eb;
+      color: #3d4759;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .skill-chip:hover {
+      background-color: #ffd1ca;
+      color: #970000;
+      border-color: #e7bdb6;
+      transform: translateY(-1px);
+    }
+    .dark .skill-chip {
+      background-color: #374151;
+      color: #e5e7eb;
+    }
+    .dark .skill-chip:hover {
+      background-color: #970000;
+      color: #ffffff;
+    }
+
+    /* Toast Notification */
+    #toast {
+      visibility: hidden;
+      min-width: 250px;
+      transform: translateY(20px);
+      transition: transform 0.3s ease, visibility 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    #toast.show {
+      visibility: visible;
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-on-surface dark:bg-inverse-surface dark:text-inverse-on-surface min-h-screen flex flex-col transition-colors duration-300">
+
+  <!-- ==================== HEADER & NAVIGATION ==================== -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-surface/95 dark:bg-inverse-surface/95 backdrop-blur-md border-b border-surface-variant dark:border-gray-800 transition-colors">
+    <div class="max-w-container-max mx-auto px-4 md:px-8 h-20 flex justify-between items-center">
+      <!-- Logo / Name -->
+      <a href="#home" class="group flex items-center gap-2">
+        <div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary font-headline font-bold text-lg shadow-sm">
+          S
+        </div>
+        <span class="font-headline text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed tracking-tight group-hover:opacity-90 transition-opacity">
+          Sachin Timalsena
+        </span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold tracking-wide uppercase">
+        <a href="#home" class="nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors py-1">Home</a>
+        <a href="#about" class="nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors py-1">About</a>
+        <a href="#expertise" class="nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors py-1">Expertise & Skills</a>
+        <a href="#experience" class="nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors py-1">Education & Experience</a>
+        <a href="#contact" class="nav-link text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors py-1">Contact</a>
+      </nav>
+
+      <!-- Right Action Area: Dark Mode & Hire Me Button -->
+      <div class="flex items-center gap-3">
+        <!-- Dark Mode Toggle Button -->
+        <button id="theme-toggle" type="button" aria-label="Toggle Dark Mode" class="p-2 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-gray-800 transition-colors">
+          <span id="theme-toggle-dark-icon" class="material-symbols-outlined text-[20px] hidden">dark_mode</span>
+          <span id="theme-toggle-light-icon" class="material-symbols-outlined text-[20px]">light_mode</span>
+        </button>
+
+        <!-- Desktop CTA -->
+        <a href="#contact" class="hidden sm:inline-flex items-center justify-center bg-primary hover:bg-primary-container text-on-primary font-semibold text-xs uppercase tracking-wider px-5 py-2.5 rounded shadow-sm hover:shadow-md transition-all">
+          Hire Me
+        </a>
+
+        <!-- Mobile Menu Hamburger -->
+        <button id="mobile-menu-btn" type="button" aria-label="Open Menu" class="md:hidden p-2 rounded-lg text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high dark:hover:bg-gray-800 focus:outline-none">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-surface-variant dark:border-gray-800 bg-surface dark:bg-inverse-surface px-6 py-4 space-y-3">
+      <a href="#home" class="mobile-nav-link block text-secondary dark:text-secondary-fixed-dim hover:text-primary font-medium py-1">Home</a>
+      <a href="#about" class="mobile-nav-link block text-secondary dark:text-secondary-fixed-dim hover:text-primary font-medium py-1">About</a>
+      <a href="#expertise" class="mobile-nav-link block text-secondary dark:text-secondary-fixed-dim hover:text-primary font-medium py-1">Expertise & Skills</a>
+      <a href="#experience" class="mobile-nav-link block text-secondary dark:text-secondary-fixed-dim hover:text-primary font-medium py-1">Education & Experience</a>
+      <a href="#contact" class="mobile-nav-link block text-secondary dark:text-secondary-fixed-dim hover:text-primary font-medium py-1">Contact</a>
+      <div class="pt-2">
+        <a href="#contact" class="mobile-nav-link block w-full text-center bg-primary text-on-primary py-2.5 rounded font-semibold text-xs uppercase tracking-wider">
+          Hire Me / Get in Touch
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="flex-grow pt-20">
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative bg-surface-container-lowest dark:bg-gray-900 border-b border-surface-variant dark:border-gray-800 py-16 md:py-24">
+      <div class="max-w-container-max mx-auto px-4 md:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Hero Left Column: Text & CTAs -->
+          <div class="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-fixed px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5">
+              <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+              Available for Financial Roles & Consulting
+            </div>
+
+            <h1 class="font-headline text-4xl sm:text-5xl lg:text-6xl font-bold text-primary dark:text-primary-fixed uppercase tracking-tight leading-none mb-4">
+              Sachin Timalsena
+            </h1>
+
+            <h2 class="text-xl sm:text-2xl font-headline font-semibold text-secondary dark:text-secondary-fixed-dim tracking-wide mb-6">
+              Strategic Finance &amp; ACCA Candidate
+            </h2>
+
+            <p class="text-secondary dark:text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mb-8">
+              Analytical and detail-oriented ACCA professional with a rigorous foundation in financial accounting, data analysis, and strategic modeling. Committed to delivering high-precision financial insights and driving sustainable organizational growth.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+              <a href="#contact" class="bg-primary hover:bg-primary-container text-on-primary font-semibold text-sm px-6 py-3 rounded shadow-md hover:shadow-lg transition-all flex items-center gap-2 uppercase tracking-wide">
+                <span class="material-symbols-outlined text-[18px]">mail</span>
+                Get In Touch
+              </a>
+              <a href="#experience" class="border border-secondary/30 dark:border-gray-700 bg-surface dark:bg-gray-800 hover:border-primary text-on-surface dark:text-white font-semibold text-sm px-6 py-3 rounded hover:shadow-sm transition-all flex items-center gap-2 uppercase tracking-wide">
+                <span class="material-symbols-outlined text-[18px]">school</span>
+                View Journey
+              </a>
+            </div>
+
+            <!-- Quick Meta Stats / Highlights -->
+            <div class="grid grid-cols-3 gap-4 sm:gap-8 mt-12 pt-8 border-t border-surface-variant dark:border-gray-800 w-full">
+              <div>
+                <div class="font-headline text-2xl sm:text-3xl font-bold text-primary dark:text-primary-fixed">ACCA</div>
+                <div class="text-xs sm:text-sm text-secondary dark:text-gray-400 mt-1">Knowledge Level (Running)</div>
+              </div>
+              <div>
+                <div class="font-headline text-2xl sm:text-3xl font-bold text-primary dark:text-primary-fixed">TU BBS</div>
+                <div class="text-xs sm:text-sm text-secondary dark:text-gray-400 mt-1">Bachelor of Business Studies</div>
+              </div>
+              <div>
+                <div class="font-headline text-2xl sm:text-3xl font-bold text-primary dark:text-primary-fixed">AI + Fin</div>
+                <div class="text-xs sm:text-sm text-secondary dark:text-gray-400 mt-1">Upskilling & Tech Integration</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Right Column: Profile Picture & Quick Contact Card -->
+          <div class="lg:col-span-5 flex flex-col items-center">
+            <div class="relative w-full max-w-sm">
+              <!-- Decorative background element -->
+              <div class="absolute -inset-2 bg-gradient-to-tr from-primary/20 to-secondary/10 rounded-2xl filter blur-lg opacity-70"></div>
+              
+              <!-- Profile Card -->
+              <div class="relative bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <!-- Avatar -->
+                <div class="flex justify-center mb-6">
+                  <div class="relative">
+                    <img 
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZP6D2D6aXzJIoK5OsodgCbkG-J1nTMyt5Q97UMWvn5ORi-OgCuX07qvwU0hy__c9zg7S9Jn6T9nbd7mYQ7b-Ga0_1Gyf6KZ-VAMewJHamULMm5N1uhV_XjnfZMcBRt9HOOXoDncn86ai_b1boATBCOTnIhRvNbhw3AqfB2PITSYTd72Mvz4NULCEVlb89k0OkGTu8Sx-GEU4IBZfsQOmlU2SAy_KPfMmKtok1ZIvKyU07FnN7WGwbLHfppZ0Vm18_uw0" 
+                      alt="Sachin Timalsena"
+                      class="w-44 h-44 object-cover rounded-full border-4 border-surface dark:border-gray-700 shadow-md"
+                      style="object-position: center 20%;"
+                      onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Sachin+Timalsena&background=970000&color=fff&size=256';"
+                    />
+                    <span class="absolute bottom-2 right-2 w-5 h-5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full" title="Online / Open to work"></span>
+                  </div>
+                </div>
+
+                <div class="text-center mb-6">
+                  <h3 class="font-headline text-xl font-bold text-on-surface dark:text-white">Sachin Timalsena</h3>
+                  <p class="text-sm text-secondary dark:text-gray-400">Finance Analyst & ACCA Student</p>
+                  <p class="text-xs text-primary dark:text-primary-fixed mt-1 flex items-center justify-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">location_on</span> Hattiban, Lalitpur, Nepal
+                  </p>
+                </div>
+
+                <!-- Quick Action Buttons inside profile card -->
+                <div class="space-y-2">
+                  <button onclick="copyToClipboard('timalsenasachin147@gmail.com', 'Email copied!')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded bg-surface-container-low dark:bg-gray-700/50 hover:bg-primary/10 dark:hover:bg-primary/20 border border-surface-variant dark:border-gray-700 text-xs font-medium text-on-surface dark:text-gray-200 transition-colors">
+                    <span class="flex items-center gap-2 truncate">
+                      <span class="material-symbols-outlined text-primary text-[18px]">mail</span>
+                      <span class="truncate">timalsenasachin147@gmail.com</span>
+                    </span>
+                    <span class="material-symbols-outlined text-[16px] text-secondary">content_copy</span>
+                  </button>
+
+                  <button onclick="copyToClipboard('+9779843003000', 'Phone number copied!')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded bg-surface-container-low dark:bg-gray-700/50 hover:bg-primary/10 dark:hover:bg-primary/20 border border-surface-variant dark:border-gray-700 text-xs font-medium text-on-surface dark:text-gray-200 transition-colors">
+                    <span class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary text-[18px]">call</span>
+                      <span>+977 9843003000</span>
+                    </span>
+                    <span class="material-symbols-outlined text-[16px] text-secondary">content_copy</span>
+                  </button>
+
+                  <a href="https://linkedin.com/in/sachin-timalsena07/" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded bg-secondary hover:bg-tertiary text-on-secondary text-xs font-semibold uppercase tracking-wider transition-colors shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">link</span>
+                    Connect on LinkedIn
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ABOUT & VALUE PROPOSITION SECTION -->
+    <section id="about" class="py-16 md:py-20 bg-surface dark:bg-inverse-surface border-b border-surface-variant dark:border-gray-800">
+      <div class="max-w-container-max mx-auto px-4 md:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <span class="text-primary dark:text-primary-fixed font-semibold text-xs uppercase tracking-widest block mb-2">About Sachin</span>
+          <h2 class="font-headline text-3xl md:text-4xl font-bold text-on-surface dark:text-white mb-4">Strategic Financial Vision</h2>
+          <div class="w-12 h-1 bg-primary mx-auto rounded"></div>
+        </div>
+
+        <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+          <div class="absolute -right-12 -top-12 w-48 h-48 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div class="max-w-4xl mx-auto space-y-6">
+            <p class="font-headline text-xl md:text-2xl text-on-surface dark:text-gray-100 leading-relaxed font-normal text-center md:text-left">
+              “I am an analytical and detail-oriented ACCA professional with a strong foundation in financial accounting, data analysis, and strategic modeling. My mission is to deliver rigorous financial insights and drive organizational growth through precise data handling and forward-thinking leadership.”
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-surface-variant dark:border-gray-700">
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed shrink-0">
+                  <span class="material-symbols-outlined text-lg">check_circle</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm text-on-surface dark:text-white">Precision & Compliance</h4>
+                  <p class="text-xs text-secondary dark:text-gray-400 mt-1">Applying IFRS, GAAP, and international financial standards with uncompromising detail.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed shrink-0">
+                  <span class="material-symbols-outlined text-lg">smart_toy</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm text-on-surface dark:text-white">Tech-Driven Finance</h4>
+                  <p class="text-xs text-secondary dark:text-gray-400 mt-1">Integrating AI tools, Power Query, and modern automation into financial workflows.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed shrink-0">
+                  <span class="material-symbols-outlined text-lg">groups</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm text-on-surface dark:text-white">Collaborative Leadership</h4>
+                  <p class="text-xs text-secondary dark:text-gray-400 mt-1">Leading analytical teams through multifaceted challenges with clarity and synergy.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- EXPERTISE & SKILLS SECTION -->
+    <section id="expertise" class="py-16 md:py-24 bg-surface-container-low dark:bg-gray-900 border-b border-surface-variant dark:border-gray-800">
+      <div class="max-w-container-max mx-auto px-4 md:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-primary dark:text-primary-fixed font-semibold text-xs uppercase tracking-widest block mb-2">Core Competencies</span>
+          <h2 class="font-headline text-3xl md:text-4xl font-bold text-primary dark:text-primary-fixed mb-4">Expertise & Skills</h2>
+          <p class="text-secondary dark:text-gray-400 text-sm md:text-base">A blend of quantitative financial modeling, rigorous reporting standards, and strategic execution.</p>
+          <div class="w-12 h-1 bg-primary mx-auto rounded mt-4"></div>
+        </div>
+
+        <!-- Hard Skills Bento Grid -->
+        <div class="mb-14">
+          <div class="flex items-center gap-2 mb-6">
+            <span class="material-symbols-outlined text-primary text-2xl">construction</span>
+            <h3 class="font-headline text-2xl font-bold text-on-surface dark:text-white">Hard Skills</h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Skill 1: Financial Modeling -->
+            <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-primary-fixed hover:shadow-md transition-all group">
+              <div class="w-12 h-12 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-2xl">analytics</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white mb-2">Financial Modeling</h4>
+              <p class="text-xs sm:text-sm text-secondary dark:text-gray-300 leading-relaxed">
+                Building robust dynamic models to support strategic decision-making, sensitivity testing, forecasting, and business valuation.
+              </p>
+            </div>
+
+            <!-- Skill 2: Data Analysis -->
+            <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-primary-fixed hover:shadow-md transition-all group">
+              <div class="w-12 h-12 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-2xl">query_stats</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white mb-2">Data Analysis</h4>
+              <p class="text-xs sm:text-sm text-secondary dark:text-gray-300 leading-relaxed">
+                Transforming complex datasets into actionable financial insights through meticulous statistical analysis and data visualization.
+              </p>
+            </div>
+
+            <!-- Skill 3: Financial Accounting -->
+            <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-primary-fixed hover:shadow-md transition-all group">
+              <div class="w-12 h-12 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-2xl">account_balance</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white mb-2">Financial Accounting</h4>
+              <p class="text-xs sm:text-sm text-secondary dark:text-gray-300 leading-relaxed">
+                Comprehensive mastery of IFRS and GAAP reporting standards, regulatory compliance, reconciliation, and audit integrity.
+              </p>
+            </div>
+
+            <!-- Skill 4: MS Office & Tech -->
+            <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-primary-fixed hover:shadow-md transition-all group">
+              <div class="w-12 h-12 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-2xl">desktop_windows</span>
+              </div>
+              <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white mb-2">MS Office Suite & AI</h4>
+              <p class="text-xs sm:text-sm text-secondary dark:text-gray-300 leading-relaxed">
+                Advanced Excel (Power Query, Pivot, VBA basics), PowerPoint financial decks, Word documentation, and modern AI tool stacks.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Soft Skills & Strategic Strengths -->
+        <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-8 shadow-sm accent-border-left">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <h3 class="font-headline text-2xl font-bold text-primary dark:text-primary-fixed">Soft Skills &amp; Leadership</h3>
+              <p class="text-xs sm:text-sm text-secondary dark:text-gray-400 mt-1">Interpersonal agility, analytical clarity, and team-oriented mindset.</p>
+            </div>
+            <span class="text-xs uppercase tracking-wider font-semibold text-secondary dark:text-gray-400 bg-surface-container-high dark:bg-gray-700 px-3 py-1 rounded">
+              Interpersonal Strengths
+            </span>
+          </div>
+
+          <div class="flex flex-wrap gap-3">
+            <span class="skill-chip">
+              <span class="material-symbols-outlined text-sm">visibility</span>
+              Observation & Detail
+            </span>
+            <span class="skill-chip">
+              <span class="material-symbols-outlined text-sm">psychology</span>
+              Strategic Decision Making
+            </span>
+            <span class="skill-chip">
+              <span class="material-symbols-outlined text-sm">forum</span>
+              Effective Communication
+            </span>
+            <span class="skill-chip">
+              <span class="material-symbols-outlined text-sm">dynamic_feed</span>
+              Multi-tasking & Prioritization
+            </span>
+            <span class="skill-chip">
+              <span class="material-symbols-outlined text-sm">groups</span>
+              Team Leadership & Mentorship
+            </span>
+            <span class="skill-chip">
+              <span class="material-symbols-outlined text-sm">lightbulb</span>
+              Critical Problem Solving
+            </span>
+            <span class="skill-chip">
+              <span class="material-symbols-outlined text-sm">sync</span>
+              Adaptive Learning
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- EDUCATION & EXPERIENCE SECTION -->
+    <section id="experience" class="py-16 md:py-24 bg-surface dark:bg-inverse-surface border-b border-surface-variant dark:border-gray-800">
+      <div class="max-w-container-max mx-auto px-4 md:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-primary dark:text-primary-fixed font-semibold text-xs uppercase tracking-widest block mb-2">Qualifications & Journey</span>
+          <h2 class="font-headline text-3xl md:text-4xl font-bold text-on-surface dark:text-white mb-4">Education &amp; Experience</h2>
+          <p class="text-secondary dark:text-gray-400 text-sm md:text-base">A detailed chronological overview of academic achievements and professional development.</p>
+          <div class="w-12 h-1 bg-primary mx-auto rounded mt-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+          <!-- Left Column: Educational Background -->
+          <div>
+            <div class="flex items-center gap-2 mb-6 pb-2 border-b-2 border-primary dark:border-primary-fixed">
+              <span class="material-symbols-outlined text-primary dark:text-primary-fixed text-2xl">school</span>
+              <h3 class="font-headline text-2xl font-bold text-on-surface dark:text-white">Educational Background</h3>
+            </div>
+
+            <div class="space-y-4">
+              
+              <!-- Education 1: ACCA -->
+              <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-lg p-5 border-l-4 border-l-primary hover:shadow-md transition-all">
+                <div class="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white">ACCA (Association of Chartered Certified Accountants)</h4>
+                    <p class="text-xs text-secondary dark:text-gray-400">Knowledge Level Stage</p>
+                  </div>
+                  <span class="text-xs font-semibold text-primary dark:text-primary-fixed bg-primary/10 dark:bg-primary/20 px-2.5 py-1 rounded">
+                    Running
+                  </span>
+                </div>
+                <p class="text-xs text-secondary dark:text-gray-300 mt-2">
+                  Comprehensive global professional qualification covering Financial Accounting, Management Accounting, and Business Law.
+                </p>
+              </div>
+
+              <!-- Education 2: Tribhuvan University BBS -->
+              <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-lg p-5 border-l-4 border-l-primary hover:shadow-md transition-all">
+                <div class="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white">Tribhuvan University</h4>
+                    <p class="text-xs text-secondary dark:text-gray-400">Bachelor of Business Studies (BBS)</p>
+                  </div>
+                  <span class="text-xs font-semibold text-primary dark:text-primary-fixed bg-primary/10 dark:bg-primary/20 px-2.5 py-1 rounded">
+                    Running
+                  </span>
+                </div>
+                <p class="text-xs text-secondary dark:text-gray-300 mt-2">
+                  Rigorous undergraduate business curriculum emphasizing financial administration, organizational management, and economic principles.
+                </p>
+              </div>
+
+              <!-- Education 3: +2 Science (Bio) -->
+              <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-lg p-5 border-l-4 border-l-secondary/40 hover:border-l-primary hover:shadow-md transition-all">
+                <div class="flex justify-between items-start mb-1">
+                  <div>
+                    <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white">Plus Two Science (Bio)</h4>
+                    <p class="text-xs text-secondary dark:text-gray-400">Liverpool International College</p>
+                  </div>
+                  <span class="text-xs font-semibold text-secondary dark:text-gray-400 bg-surface-container-high dark:bg-gray-700 px-2.5 py-1 rounded">
+                    2026
+                  </span>
+                </div>
+                <div class="flex items-center justify-between mt-3 pt-2 border-t border-surface-variant/60 dark:border-gray-700 text-xs">
+                  <span class="text-secondary dark:text-gray-400">Higher Secondary Education</span>
+                  <span class="text-xs font-semibold text-green-700 dark:text-green-400 uppercase tracking-wider flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">check</span> Completed
+                  </span>
+                </div>
+              </div>
+
+              <!-- Education 4: SEE -->
+              <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-lg p-5 border-l-4 border-l-secondary/40 hover:border-l-primary hover:shadow-md transition-all">
+                <div class="flex justify-between items-start mb-1">
+                  <div>
+                    <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white">Secondary Education Examination (SEE)</h4>
+                    <p class="text-xs text-secondary dark:text-gray-400">Minduka Secondary School</p>
+                  </div>
+                  <span class="text-xs font-semibold text-secondary dark:text-gray-400 bg-surface-container-high dark:bg-gray-700 px-2.5 py-1 rounded">
+                    2024
+                  </span>
+                </div>
+                <div class="flex items-center justify-between mt-3 pt-2 border-t border-surface-variant/60 dark:border-gray-700 text-xs">
+                  <span class="text-secondary dark:text-gray-400">Secondary Level Certificate</span>
+                  <span class="text-xs font-semibold text-green-700 dark:text-green-400 uppercase tracking-wider flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">check</span> Completed
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right Column: Professional Experience & Upskilling -->
+          <div>
+            <div class="flex items-center gap-2 mb-6 pb-2 border-b-2 border-primary dark:border-primary-fixed">
+              <span class="material-symbols-outlined text-primary dark:text-primary-fixed text-2xl">work</span>
+              <h3 class="font-headline text-2xl font-bold text-on-surface dark:text-white">Professional Experience &amp; Leadership</h3>
+            </div>
+
+            <div class="space-y-4">
+              
+              <!-- Experience 1: AI Upskilling -->
+              <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-lg p-5 border-l-4 border-l-primary hover:shadow-md transition-all">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 rounded bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed">
+                    <span class="material-symbols-outlined text-xl">model_training</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white">AI Upskilling &amp; Technology Training</h4>
+                    <p class="text-xs text-secondary dark:text-gray-400">Technological Integration in Finance</p>
+                  </div>
+                </div>
+                <ul class="space-y-2 mt-3 text-xs sm:text-sm text-secondary dark:text-gray-300">
+                  <li class="flex items-start gap-2">
+                    <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0"></span>
+                    <span>Engaged in advanced AI training programs to leverage modern technological tools, automated reporting, and prompt engineering in financial contexts.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0"></span>
+                    <span>Explored practical applications of generative AI and quantitative tools for accelerating financial research and analysis.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Experience 2: Team Leader -->
+              <div class="bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-lg p-5 border-l-4 border-l-primary hover:shadow-md transition-all">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 rounded bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed">
+                    <span class="material-symbols-outlined text-xl">groups</span>
+                  </div>
+                  <div>
+                    <h4 class="font-headline text-lg font-bold text-on-surface dark:text-white">Forward-thinking Team Leader</h4>
+                    <p class="text-xs text-secondary dark:text-gray-400">Project Management & Collaboration</p>
+                  </div>
+                </div>
+                <ul class="space-y-2 mt-3 text-xs sm:text-sm text-secondary dark:text-gray-300">
+                  <li class="flex items-start gap-2">
+                    <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0"></span>
+                    <span>Demonstrated leadership capabilities by guiding teams through complex analytical projects, structured deliverables, and presentation phases.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0"></span>
+                    <span>Fostered collaborative environments, establishing effective delegation and conflict resolution to meet milestones efficiently.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Visual Philosophy Card -->
+              <div class="p-6 bg-surface-container-low dark:bg-gray-800/60 rounded-xl border border-surface-variant dark:border-gray-700 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed shrink-0">
+                  <span class="material-symbols-outlined text-2xl">timeline</span>
+                </div>
+                <div>
+                  <h4 class="font-headline text-base font-bold text-on-surface dark:text-white">Commitment to Continuous Growth</h4>
+                  <p class="text-xs text-secondary dark:text-gray-400 mt-1">
+                    Continuously blending rigorous academic foundations with real-world technological and leadership competencies.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CONTACT & GET IN TOUCH SECTION -->
+    <section id="contact" class="py-16 md:py-24 bg-surface-container-lowest dark:bg-gray-900">
+      <div class="max-w-container-max mx-auto px-4 md:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-primary dark:text-primary-fixed font-semibold text-xs uppercase tracking-widest block mb-2">Let's Connect</span>
+          <h2 class="font-headline text-3xl md:text-4xl font-bold text-primary dark:text-primary-fixed mb-4">Get In Touch</h2>
+          <p class="text-secondary dark:text-gray-400 text-sm md:text-base">Looking for an ACCA candidate with high analytical rigor and technological fluency? Reach out anytime.</p>
+          <div class="w-12 h-1 bg-primary mx-auto rounded mt-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+          <!-- Contact Details & Socials Card -->
+          <div class="lg:col-span-5 flex flex-col gap-6">
+            
+            <div class="bg-surface dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-6 sm:p-8 accent-border-left shadow-sm">
+              <h3 class="font-headline text-2xl font-bold text-on-surface dark:text-white mb-6">Contact Information</h3>
+
+              <div class="space-y-5">
+                
+                <!-- Email Item -->
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed shrink-0">
+                    <span class="material-symbols-outlined text-xl">mail</span>
+                  </div>
+                  <div class="overflow-hidden">
+                    <span class="text-xs uppercase tracking-wider text-secondary dark:text-gray-400 block">Email Address</span>
+                    <a href="mailto:timalsenasachin147@gmail.com" class="text-sm font-semibold text-on-surface dark:text-white hover:text-primary transition-colors break-all">
+                      timalsenasachin147@gmail.com
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Phone Item -->
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed shrink-0">
+                    <span class="material-symbols-outlined text-xl">call</span>
+                  </div>
+                  <div>
+                    <span class="text-xs uppercase tracking-wider text-secondary dark:text-gray-400 block">Phone</span>
+                    <a href="tel:+9779843003000" class="text-sm font-semibold text-on-surface dark:text-white hover:text-primary transition-colors">
+                      +977 9843003000
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Location Item -->
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed shrink-0">
+                    <span class="material-symbols-outlined text-xl">location_on</span>
+                  </div>
+                  <div>
+                    <span class="text-xs uppercase tracking-wider text-secondary dark:text-gray-400 block">Location</span>
+                    <p class="text-sm font-semibold text-on-surface dark:text-white">
+                      Hattiban, Lalitpur, Nepal
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Social Media Profiles -->
+              <div class="mt-8 pt-6 border-t border-surface-variant dark:border-gray-700">
+                <span class="text-xs uppercase tracking-wider text-secondary dark:text-gray-400 font-semibold block mb-4">
+                  Connect on Social Platforms
+                </span>
+
+                <div class="flex flex-col gap-2.5">
+                  <a href="https://linkedin.com/in/sachin-timalsena07/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low dark:bg-gray-700/50 hover:bg-primary hover:text-white dark:hover:bg-primary transition-all text-xs font-semibold text-secondary dark:text-gray-200 group">
+                    <span class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-[18px]">link</span>
+                      LinkedIn / sachin-timalsena07
+                    </span>
+                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </a>
+
+                  <a href="https://instagram.com/sachin_timalsena07" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low dark:bg-gray-700/50 hover:bg-primary hover:text-white dark:hover:bg-primary transition-all text-xs font-semibold text-secondary dark:text-gray-200 group">
+                    <span class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                      Instagram / @sachin_timalsena07
+                    </span>
+                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </a>
+
+                  <a href="#" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low dark:bg-gray-700/50 hover:bg-primary hover:text-white dark:hover:bg-primary transition-all text-xs font-semibold text-secondary dark:text-gray-200 group">
+                    <span class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-[18px]">share</span>
+                      Facebook / Sachin Timalsena
+                    </span>
+                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Interactive Message Form -->
+          <div class="lg:col-span-7">
+            <div class="bg-surface dark:bg-gray-800 border border-surface-variant dark:border-gray-700 rounded-xl p-6 sm:p-8 shadow-sm">
+              <h3 class="font-headline text-2xl font-bold text-on-surface dark:text-white mb-2">Send a Message</h3>
+              <p class="text-xs sm:text-sm text-secondary dark:text-gray-400 mb-6">
+                Fill in the form below to send an email inquiry directly to Sachin.
+              </p>
+
+              <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-secondary dark:text-gray-300 mb-1.5">Your Name</label>
+                    <input type="text" id="name" required class="w-full px-4 py-2.5 rounded bg-surface-container-lowest dark:bg-gray-900 border border-surface-variant dark:border-gray-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-white outline-none transition-colors" placeholder="e.g. John Doe" />
+                  </div>
+                  <div>
+                    <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-secondary dark:text-gray-300 mb-1.5">Your Email</label>
+                    <input type="email" id="email" required class="w-full px-4 py-2.5 rounded bg-surface-container-lowest dark:bg-gray-900 border border-surface-variant dark:border-gray-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-white outline-none transition-colors" placeholder="e.g. john@example.com" />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="subject" class="block text-xs font-semibold uppercase tracking-wider text-secondary dark:text-gray-300 mb-1.5">Subject</label>
+                  <input type="text" id="subject" required class="w-full px-4 py-2.5 rounded bg-surface-container-lowest dark:bg-gray-900 border border-surface-variant dark:border-gray-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-white outline-none transition-colors" placeholder="e.g. Financial Analyst Opportunity / Collaboration" />
+                </div>
+
+                <div>
+                  <label for="message" class="block text-xs font-semibold uppercase tracking-wider text-secondary dark:text-gray-300 mb-1.5">Message</label>
+                  <textarea id="message" rows="5" required class="w-full px-4 py-2.5 rounded bg-surface-container-lowest dark:bg-gray-900 border border-surface-variant dark:border-gray-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-white outline-none transition-colors resize-y" placeholder="Write your message or inquiry here..."></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-primary hover:bg-primary-container text-on-primary font-semibold text-sm uppercase tracking-wider py-3.5 px-6 rounded shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                  <span class="material-symbols-outlined text-[18px]">send</span>
+                  Send Message via Email
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-surface-container-highest dark:bg-inverse-surface border-t border-surface-variant dark:border-gray-800 py-12 transition-colors">
+    <div class="max-w-container-max mx-auto px-4 md:px-8">
+      
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6 pb-8 border-b border-surface-variant dark:border-gray-800">
+        <div class="text-center md:text-left">
+          <div class="font-headline text-2xl font-bold text-primary dark:text-primary-fixed uppercase tracking-tight">
+            Sachin Timalsena
+          </div>
+          <p class="text-xs text-secondary dark:text-gray-400 mt-1">
+            Strategic Finance Professional &amp; ACCA Candidate
+          </p>
+        </div>
+
+        <ul class="flex flex-wrap justify-center gap-6 text-xs font-semibold uppercase tracking-wider">
+          <li><a href="#home" class="text-secondary dark:text-gray-400 hover:text-primary dark:hover:text-primary-fixed transition-colors">Home</a></li>
+          <li><a href="#about" class="text-secondary dark:text-gray-400 hover:text-primary dark:hover:text-primary-fixed transition-colors">About</a></li>
+          <li><a href="#expertise" class="text-secondary dark:text-gray-400 hover:text-primary dark:hover:text-primary-fixed transition-colors">Expertise</a></li>
+          <li><a href="#experience" class="text-secondary dark:text-gray-400 hover:text-primary dark:hover:text-primary-fixed transition-colors">Experience</a></li>
+          <li><a href="#contact" class="text-secondary dark:text-gray-400 hover:text-primary dark:hover:text-primary-fixed transition-colors">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 text-xs text-secondary dark:text-gray-400">
+        <p>© 2026 Sachin Timalsena. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+          <a href="mailto:timalsenasachin147@gmail.com" class="hover:text-primary transition-colors">timalsenasachin147@gmail.com</a>
+          <span>•</span>
+          <span>Hattiban, Lalitpur</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface dark:bg-primary dark:text-white px-5 py-3 rounded-lg shadow-xl flex items-center gap-3 border border-gray-700 text-sm font-medium">
+    <span class="material-symbols-outlined text-green-400 text-lg">check_circle</span>
+    <span id="toast-message">Copied to clipboard!</span>
+  </div>
+
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // --- Dark / Light Mode Handling ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+    // Check system or saved preference
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      darkIcon.classList.add('hidden');
+      lightIcon.classList.remove('hidden');
+    } else {
+      document.documentElement.classList.remove('dark');
+      lightIcon.classList.add('hidden');
+      darkIcon.classList.remove('hidden');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+      darkIcon.classList.toggle('hidden');
+      lightIcon.classList.toggle('hidden');
+
+      if (localStorage.getItem('color-theme')) {
+        if (localStorage.getItem('color-theme') === 'light') {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+        }
+      } else {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+        }
+      }
+    });
+
+    // --- Mobile Menu Toggle ---
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // --- Clipboard Copy Helper & Toast ---
+    function copyToClipboard(text, message = 'Copied to clipboard!') {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(message);
+      }).catch(() => {
+        window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // --- Contact Form Handler ---
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+
+      const mailtoUrl = `mailto:timalsenasachin147@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+      
+      showToast("Opening email client...");
+      window.location.href = mailtoUrl;
+    }
+
+    // --- Active Link Highlighting on Scroll ---
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollPosition = window.pageYOffset + 120;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('text-primary', 'dark:text-primary-fixed', 'border-b-2', 'border-primary');
+        link.classList.add('text-secondary', 'dark:text-secondary-fixed-dim');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.remove('text-secondary', 'dark:text-secondary-fixed-dim');
+          link.classList.add('text-primary', 'dark:text-primary-fixed', 'border-b-2', 'border-primary');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
