@@ -942,8 +942,9 @@
 
 
   <!-- ==================== VISITOR NOTICE POPUP MODAL ==================== -->
-  <div id="visitor-notice-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300">
-    <div id="visitor-notice-card" class="relative w-full max-w-lg bg-surface-container-lowest dark:bg-gray-900 border border-surface-variant dark:border-gray-700 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0">
+  <!-- ==================== VISITOR NOTICE POPUP MODAL ==================== -->
+  <div id="visitor-notice-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300">
+    <div id="visitor-notice-card" class="relative w-full max-w-xl md:max-w-2xl bg-surface-container-lowest dark:bg-gray-900 border border-surface-variant dark:border-gray-700 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0">
       
       <!-- Top Banner Accent Gradient -->
       <div class="h-2 bg-gradient-to-r from-primary via-red-600 to-primary"></div>
@@ -961,20 +962,26 @@
           <span id="visitor-notice-badge">Special Announcement</span>
         </div>
 
-        <!-- Optional Photo Container -->
-        <div id="visitor-notice-img-container" class="hidden mb-5 overflow-hidden rounded-xl border border-surface-variant dark:border-gray-700 bg-surface-container-low dark:bg-gray-800 shadow-sm">
-          <img id="visitor-notice-img" src="" alt="Notice Image" class="w-full max-h-72 object-cover" />
-        </div>
-
         <!-- Title -->
         <h3 id="visitor-notice-title" class="font-headline text-2xl md:text-3xl font-bold text-on-surface dark:text-white leading-tight mb-3">
           Important Notice
         </h3>
 
-        <!-- Description / Text -->
-        <p id="visitor-notice-desc" class="text-sm md:text-base text-secondary dark:text-gray-300 leading-relaxed whitespace-pre-line mb-6">
-          Notice description will appear here.
-        </p>
+        <!-- Description / Text with View More toggle -->
+        <div class="mb-5">
+          <p id="visitor-notice-desc" class="text-sm md:text-base text-secondary dark:text-gray-300 leading-relaxed whitespace-pre-line line-clamp-3 transition-all duration-300">
+            Notice description will appear here.
+          </p>
+          <button id="notice-view-more-btn" type="button" onclick="toggleNoticeTextExpand()" class="hidden mt-2 text-xs font-bold uppercase tracking-wider text-primary dark:text-primary-fixed hover:underline flex items-center gap-1">
+            <span id="notice-view-more-text">View more</span>
+            <span id="notice-view-more-icon" class="material-symbols-outlined text-[16px]">expand_more</span>
+          </button>
+        </div>
+
+        <!-- Photo Container (Positioned below text & adapts to photo size) -->
+        <div id="visitor-notice-img-container" class="hidden mb-6 overflow-hidden rounded-xl border border-surface-variant dark:border-gray-700 bg-surface-container-low dark:bg-gray-800/80 shadow-sm text-center">
+          <img id="visitor-notice-img" src="" alt="Notice Image" class="w-full max-h-[55vh] object-contain rounded-xl mx-auto" />
+        </div>
 
         <!-- Footer Action Buttons -->
         <div class="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-surface-variant dark:border-gray-800">
@@ -1042,7 +1049,7 @@
 
             <div class="text-center pt-2">
               <button type="button" onclick="showForgotPasswordView()" class="text-xs text-secondary dark:text-gray-400 hover:text-primary dark:hover:text-primary-fixed underline transition-colors">
-                Forgot password? Reset via timalsenasachin147@gmail.com
+                Forgot password?
               </button>
             </div>
           </form>
@@ -1058,18 +1065,18 @@
             </div>
             <h4 class="font-headline text-2xl font-bold text-on-surface dark:text-white mb-1">Reset Admin Password</h4>
             <p class="text-xs text-secondary dark:text-gray-400">
-              Verification OTP generated for: <strong class="text-primary dark:text-primary-fixed">timalsenasachin147@gmail.com</strong>
+              A 6-digit security code has been generated. Enter it below to set a new password.
             </p>
           </div>
 
           <!-- OTP Display Box -->
           <div id="otp-alert-box" class="mb-5 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 text-xs">
             <div class="flex items-start gap-2.5">
-              <span class="material-symbols-outlined text-amber-600 text-base shrink-0 mt-0.5">info</span>
+              <span class="material-symbols-outlined text-amber-600 text-base shrink-0 mt-0.5">lock_reset</span>
               <div>
                 <p class="font-semibold">Security Verification Code (OTP):</p>
                 <p class="mt-1 font-mono text-xl font-bold tracking-widest text-primary dark:text-primary-fixed" id="generated-otp-display">------</p>
-                <p class="mt-1 text-[11px] text-secondary dark:text-gray-400">This 6-digit code has been issued for your email verification.</p>
+                <p class="mt-1 text-[11px] text-secondary dark:text-gray-400">Enter this code below along with your new password.</p>
               </div>
             </div>
           </div>
@@ -1411,29 +1418,54 @@
       localStorage.setItem('sachin_notice_data', JSON.stringify(data));
     }
 
-    // --- Secret Trigger 1: Triple-tap on Header 'S' Logo ---
+    // --- Secret Trigger: Require holding Ctrl + Shift WHILE triple-tapping 'S' (or Ctrl+Shift+A) ---
     let logoClickCount = 0;
     let logoClickTimer = null;
+    let longPressTimer = null;
     const secretLogoBadge = document.getElementById('secret-logo-badge');
 
     if (secretLogoBadge) {
+      // Desktop: MUST hold Ctrl AND Shift while triple-tapping the 'S' logo
       secretLogoBadge.addEventListener('click', (e) => {
         e.preventDefault();
-        logoClickCount++;
-        clearTimeout(logoClickTimer);
         
-        if (logoClickCount === 3) {
-          logoClickCount = 0;
-          openAdminModal();
-        } else {
-          logoClickTimer = setTimeout(() => {
+        const isCtrlShiftHeld = (e.ctrlKey || e.metaKey) && e.shiftKey;
+        
+        if (isCtrlShiftHeld) {
+          logoClickCount++;
+          clearTimeout(logoClickTimer);
+          
+          if (logoClickCount === 3) {
             logoClickCount = 0;
-          }, 1200);
+            openAdminModal();
+          } else {
+            logoClickTimer = setTimeout(() => {
+              logoClickCount = 0;
+            }, 1500);
+          }
+        } else {
+          // Regular click without Ctrl+Shift does nothing
+          logoClickCount = 0;
         }
+      });
+
+      // Mobile Touchscreen Support: Long-press on 'S' for 3.5 seconds
+      secretLogoBadge.addEventListener('touchstart', (e) => {
+        longPressTimer = setTimeout(() => {
+          openAdminModal();
+          showToast("Admin portal unlocked!");
+        }, 3500);
+      }, { passive: true });
+
+      secretLogoBadge.addEventListener('touchend', () => {
+        clearTimeout(longPressTimer);
+      });
+      secretLogoBadge.addEventListener('touchmove', () => {
+        clearTimeout(longPressTimer);
       });
     }
 
-    // --- Secret Trigger 2: Keyboard Shortcut (Ctrl + Shift + A) ---
+    // --- Secret Trigger 2: Keyboard Shortcut anywhere (Ctrl + Shift + A) ---
     window.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
         e.preventDefault();
@@ -1480,7 +1512,7 @@
       document.getElementById('reset-new-pass').value = '';
       document.getElementById('reset-confirm-pass').value = '';
 
-      showToast("OTP generated for timalsenasachin147@gmail.com");
+      showToast("Security code generated for your email.");
     }
 
     function showDashboardView() {
@@ -1763,6 +1795,9 @@
       const badgeEl = document.getElementById('visitor-notice-badge');
       const titleEl = document.getElementById('visitor-notice-title');
       const descEl = document.getElementById('visitor-notice-desc');
+      const viewMoreBtn = document.getElementById('notice-view-more-btn');
+      const viewMoreText = document.getElementById('notice-view-more-text');
+      const viewMoreIcon = document.getElementById('notice-view-more-icon');
       const imgContainer = document.getElementById('visitor-notice-img-container');
       const imgEl = document.getElementById('visitor-notice-img');
       const actionBtn = document.getElementById('visitor-notice-action-btn');
@@ -1772,6 +1807,22 @@
       titleEl.textContent = data.title || 'Notice';
       descEl.textContent = data.desc || '';
 
+      // Reset collapsible text view
+      descEl.classList.add('line-clamp-3');
+      viewMoreText.textContent = 'View more';
+      viewMoreIcon.textContent = 'expand_more';
+
+      // Check if text is long enough to warrant "View more" button
+      if (data.desc && (data.desc.length > 150 || data.desc.includes('\n'))) {
+        viewMoreBtn.classList.remove('hidden');
+        viewMoreBtn.classList.add('inline-flex');
+      } else {
+        viewMoreBtn.classList.add('hidden');
+        viewMoreBtn.classList.remove('inline-flex');
+        descEl.classList.remove('line-clamp-3');
+      }
+
+      // Handle Image
       if (data.imageUrl) {
         imgEl.src = data.imageUrl;
         imgContainer.classList.remove('hidden');
@@ -1779,6 +1830,7 @@
         imgContainer.classList.add('hidden');
       }
 
+      // Handle Button
       if (data.btnText && data.btnLink) {
         btnTextEl.textContent = data.btnText;
         actionBtn.href = data.btnLink;
@@ -1796,6 +1848,23 @@
         card.classList.remove('scale-95', 'opacity-0');
         card.classList.add('scale-100', 'opacity-100');
       }, 20);
+    }
+
+    // Toggle full text expansion on notice
+    function toggleNoticeTextExpand() {
+      const descEl = document.getElementById('visitor-notice-desc');
+      const viewMoreText = document.getElementById('notice-view-more-text');
+      const viewMoreIcon = document.getElementById('notice-view-more-icon');
+
+      if (descEl.classList.contains('line-clamp-3')) {
+        descEl.classList.remove('line-clamp-3');
+        viewMoreText.textContent = 'View less';
+        viewMoreIcon.textContent = 'expand_less';
+      } else {
+        descEl.classList.add('line-clamp-3');
+        viewMoreText.textContent = 'View more';
+        viewMoreIcon.textContent = 'expand_more';
+      }
     }
 
     function closeVisitorNoticeModal() {
@@ -1836,7 +1905,6 @@
       const alreadyClosedInSession = sessionStorage.getItem('sachin_notice_closed');
 
       if (notice.active && notice.title && !alreadyClosedInSession) {
-        // Small delay for smooth entry on load
         setTimeout(() => {
           displayVisitorNoticeModal(notice);
         }, 1200);
