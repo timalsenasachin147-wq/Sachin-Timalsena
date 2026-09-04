@@ -947,7 +947,7 @@
 
 
   <!-- ==================== TOAST NOTIFICATION ==================== -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface dark:bg-primary dark:text-white px-5 py-3 rounded-lg shadow-xl flex items-center gap-3 border border-gray-700 text-sm font-medium">
+  <div id="toast" class="fixed bottom-6 right-6 z-[350] bg-inverse-surface text-inverse-on-surface dark:bg-primary dark:text-white px-5 py-3 rounded-lg shadow-xl flex items-center gap-3 border border-gray-700 text-sm font-medium">
     <span class="material-symbols-outlined text-green-400 text-lg">check_circle</span>
     <span id="toast-message">Copied to clipboard!</span>
   </div>
@@ -1479,7 +1479,7 @@
     // =========================================================================
 
     const DEFAULT_ADMIN_PASSWORD = 'Sachin07';
-    // Dedicated Persistent Cloud Bucket for Sachin Timalsena Portfolio (Cross-device sync)
+    // Dedicated Persistent Cloud Bucket for Sachin Timalsena Portfolio
     const CLOUD_BUCKET_URL = 'https://kvdb.io/2U5H48oZ6BSachinPortfolio/';
     
     let currentUploadedImageData = '';
@@ -1497,7 +1497,7 @@
       fetch(CLOUD_BUCKET_URL + 'admin_pass', {
         method: 'POST',
         body: newPass
-      }).catch(err => console.log('Cloud pass sync fallback:', err));
+      }).catch(err => console.log('Cloud pass sync:', err));
     }
 
     // --- Notice Data Getters/Setters with Cloud Sync ---
@@ -1524,7 +1524,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
-      }).catch(err => console.log('Cloud notice sync fallback:', err));
+      }).catch(err => console.log('Cloud notice sync:', err));
     }
 
     // --- Name Pronunciation Audio Getters/Setters with Cloud Sync ---
@@ -1538,7 +1538,7 @@
         fetch(CLOUD_BUCKET_URL + 'name_audio', {
           method: 'POST',
           body: audioData
-        }).catch(err => console.log('Cloud audio sync fallback:', err));
+        }).catch(err => console.log('Cloud audio sync:', err));
       } else {
         localStorage.removeItem('sachin_voice_note');
         fetch(CLOUD_BUCKET_URL + 'name_audio', {
@@ -1550,15 +1550,13 @@
     // --- Initial Async Cloud Sync on Page Load ---
     async function syncFromCloud() {
       try {
-        // 1. Sync Notice Data
+        // 1. Sync Notice Data from Cloud
         const noticeRes = await fetch(CLOUD_BUCKET_URL + 'notice_data');
         if (noticeRes.ok) {
           const cloudNotice = await noticeRes.json();
-          if (cloudNotice && typeof cloudNotice === 'object') {
+          if (cloudNotice && typeof cloudNotice === 'object' && cloudNotice.title) {
             localStorage.setItem('sachin_notice_data', JSON.stringify(cloudNotice));
-            // Check if active and should display on page load
-            const alreadyClosed = sessionStorage.getItem('sachin_notice_closed');
-            if (cloudNotice.active && cloudNotice.title && !alreadyClosed) {
+            if (cloudNotice.active) {
               displayVisitorNoticeModal(cloudNotice);
             }
           }
@@ -1566,7 +1564,7 @@
       } catch(e) {}
 
       try {
-        // 2. Sync Admin Password
+        // 2. Sync Admin Password from Cloud
         const passRes = await fetch(CLOUD_BUCKET_URL + 'admin_pass');
         if (passRes.ok) {
           const cloudPass = await passRes.text();
@@ -1577,7 +1575,7 @@
       } catch(e) {}
 
       try {
-        // 3. Sync Name Voice Note
+        // 3. Sync Name Voice Note from Cloud
         const audioRes = await fetch(CLOUD_BUCKET_URL + 'name_audio');
         if (audioRes.ok) {
           const cloudAudio = await audioRes.text();
@@ -1788,38 +1786,13 @@
 
 
     // =========================================================================
-    // ===================== SECRET TRIGGER COMBINATION ========================
+    // ================== SECRET TRIGGER (CTRL+SHIFT+CAPSLOCK+S) ===============
     // =========================================================================
 
-    let logoClickCount = 0;
-    let logoClickTimer = null;
     let longPressTimer = null;
     const secretLogoBadge = document.getElementById('secret-logo-badge');
 
     if (secretLogoBadge) {
-      // Desktop: MUST hold Ctrl AND Shift while triple-tapping the 'S' logo
-      secretLogoBadge.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        const isCtrlShiftHeld = (e.ctrlKey || e.metaKey) && e.shiftKey;
-        
-        if (isCtrlShiftHeld) {
-          logoClickCount++;
-          clearTimeout(logoClickTimer);
-          
-          if (logoClickCount === 3) {
-            logoClickCount = 0;
-            openAdminModal();
-          } else {
-            logoClickTimer = setTimeout(() => {
-              logoClickCount = 0;
-            }, 1500);
-          }
-        } else {
-          logoClickCount = 0;
-        }
-      });
-
       // Mobile Touchscreen Support: Long-press on 'S' for 5 full seconds
       secretLogoBadge.addEventListener('touchstart', (e) => {
         longPressTimer = setTimeout(() => {
@@ -1836,11 +1809,18 @@
       });
     }
 
-    // --- Secret Trigger 2: Keyboard Shortcut anywhere (Ctrl + Shift + A) ---
+    // --- Web / Desktop Secret Trigger: Ctrl + Shift + CapsLock + S at the same time ---
     window.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
+      const isCtrl = e.ctrlKey || e.metaKey;
+      const isShift = e.shiftKey;
+      const isS = e.key === 's' || e.key === 'S' || e.code === 'KeyS';
+      const isCapsLock = e.getModifierState && e.getModifierState('CapsLock');
+
+      // Trigger when Ctrl + Shift + CapsLock + S are all pressed together
+      if (isCtrl && isShift && isS && isCapsLock) {
         e.preventDefault();
         openAdminModal();
+        showToast("Admin access triggered!");
       }
     });
 
@@ -1960,13 +1940,13 @@
       }
     }
 
-    // --- Handle Admin Login ---
+    // --- Handle Admin Login (Supports current password & master fallback Sachin07) ---
     function handleAdminLogin(event) {
       event.preventDefault();
-      const enteredPass = document.getElementById('admin-pass-input').value;
-      const actualPass = getAdminPassword();
+      const enteredPass = document.getElementById('admin-pass-input').value.trim();
+      const actualPass = getAdminPassword().trim();
 
-      if (enteredPass === actualPass) {
+      if (enteredPass === actualPass || enteredPass === DEFAULT_ADMIN_PASSWORD) {
         document.getElementById('admin-login-error').classList.add('hidden');
         showDashboardView();
         showToast("Admin access unlocked!");
@@ -2192,7 +2172,7 @@
 
       const actualPass = getAdminPassword();
 
-      if (currentPass !== actualPass) {
+      if (currentPass !== actualPass && currentPass !== DEFAULT_ADMIN_PASSWORD) {
         msg.textContent = "Current password is incorrect.";
         msg.className = "text-xs font-medium text-red-600 dark:text-red-400";
         msg.classList.remove('hidden');
@@ -2320,9 +2300,6 @@
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }, 250);
-
-      // Save session flag so visitor isn't spammed repeatedly in same browsing session
-      sessionStorage.setItem('sachin_notice_closed', 'true');
     }
 
     // Close visitor modal on click handlers
@@ -2345,12 +2322,11 @@
     window.addEventListener('DOMContentLoaded', () => {
       // 1. Initial local notice check
       const notice = getNoticeData();
-      const alreadyClosedInSession = sessionStorage.getItem('sachin_notice_closed');
 
-      if (notice.active && notice.title && !alreadyClosedInSession) {
+      if (notice.active && notice.title) {
         setTimeout(() => {
           displayVisitorNoticeModal(notice);
-        }, 1200);
+        }, 800);
       }
 
       // 2. Fetch and sync latest cloud data (Notice, Password & Voice Note)
