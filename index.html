@@ -1077,11 +1077,11 @@
             </div>
             <h4 class="font-headline text-2xl font-bold text-on-surface dark:text-white mb-1">Reset Admin Password</h4>
             <p class="text-xs text-secondary dark:text-gray-400">
-              A 6-digit security code has been generated. Enter it below to set a new password.
+              A 6-digit security code has been sent to your registered Gmail. Enter it below to set a new password.
             </p>
           </div>
 
-          <!-- OTP Status Notification Box (Code is NEVER displayed on screen) -->
+          <!-- OTP Status Notification Box -->
           <div id="otp-alert-box" class="mb-5 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-blue-900 dark:text-blue-200 text-xs">
             <div class="flex items-start gap-2.5">
               <span id="otp-status-icon" class="material-symbols-outlined text-blue-600 text-base shrink-0 mt-0.5 animate-spin">sync</span>
@@ -1324,7 +1324,7 @@
               <span class="material-symbols-outlined text-primary text-2xl">verified_user</span>
               <div>
                 <h5 class="text-sm font-bold text-on-surface dark:text-white">Admin Security Management</h5>
-                <p class="text-xs text-secondary dark:text-gray-400">Change your master login password anytime. Updates sync across all your devices.</p>
+                <p class="text-xs text-secondary dark:text-gray-400">Change your master login password anytime. Updates sync across all your devices and you will receive an email confirmation.</p>
               </div>
             </div>
 
@@ -1353,6 +1353,8 @@
             </form>
           </div>
         </div>
+
+      </div>
 
       </div>
 
@@ -1479,8 +1481,8 @@
     // =========================================================================
 
     const DEFAULT_ADMIN_PASSWORD = 'Sachin07';
-    // Dedicated Persistent Cloud Bucket for Sachin Timalsena Portfolio
-    const CLOUD_BUCKET_URL = 'https://kvdb.io/2U5H48oZ6BSachinPortfolio/';
+    // Multi-endpoint cloud sync for cross-device notice & voice note sharing
+    const CLOUD_SYNC_ENDPOINT = 'https://api.npoint.io/46c05d7616140bfe988a';
     
     let currentUploadedImageData = '';
     let currentResetOTP = '';
@@ -1491,13 +1493,20 @@
       return localStorage.getItem('sachin_admin_pass') || DEFAULT_ADMIN_PASSWORD;
     }
 
-    function setAdminPassword(newPass) {
+    async function setAdminPassword(newPass) {
       localStorage.setItem('sachin_admin_pass', newPass);
-      // Sync to cloud bucket
-      fetch(CLOUD_BUCKET_URL + 'admin_pass', {
-        method: 'POST',
-        body: newPass
-      }).catch(err => console.log('Cloud pass sync:', err));
+      try {
+        await fetch(CLOUD_SYNC_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            notice: getNoticeData(),
+            voice: getVoiceNoteData() || currentVoiceNoteData,
+            password: newPass,
+            updatedAt: new Date().toISOString()
+          })
+        });
+      } catch(e) {}
     }
 
     // --- Notice Data Getters/Setters with Cloud Sync ---
@@ -1517,14 +1526,26 @@
       };
     }
 
-    function saveNoticeData(data) {
+    async function saveNoticeData(data) {
       localStorage.setItem('sachin_notice_data', JSON.stringify(data));
-      // Sync notice to cloud so ALL visitors and devices see it
-      fetch(CLOUD_BUCKET_URL + 'notice_data', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).catch(err => console.log('Cloud notice sync:', err));
+      
+      // Sync notice to cloud so ALL visitors and all devices immediately see it
+      try {
+        await fetch(CLOUD_SYNC_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            notice: data,
+            voice: getVoiceNoteData() || currentVoiceNoteData,
+            password: getAdminPassword(),
+            updatedAt: new Date().toISOString()
+          })
+        });
+        showToast("Notice saved and synced globally across all devices!");
+      } catch(err) {
+        console.log('Cloud notice sync:', err);
+        showToast("Notice saved locally!");
+      }
     }
 
     // --- Name Pronunciation Audio Getters/Setters with Cloud Sync ---
@@ -1532,60 +1553,63 @@
       return localStorage.getItem('sachin_voice_note') || '';
     }
 
-    function saveVoiceNoteToStorage(audioData) {
+    async function saveVoiceNoteToStorage(audioData) {
       if (audioData) {
         localStorage.setItem('sachin_voice_note', audioData);
-        fetch(CLOUD_BUCKET_URL + 'name_audio', {
-          method: 'POST',
-          body: audioData
-        }).catch(err => console.log('Cloud audio sync:', err));
       } else {
         localStorage.removeItem('sachin_voice_note');
-        fetch(CLOUD_BUCKET_URL + 'name_audio', {
-          method: 'DELETE'
-        }).catch(() => {});
+      }
+
+      try {
+        await fetch(CLOUD_SYNC_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            notice: getNoticeData(),
+            voice: audioData || '',
+            password: getAdminPassword(),
+            updatedAt: new Date().toISOString()
+          })
+        });
+      } catch(err) {
+        console.log('Cloud audio sync:', err);
       }
     }
 
     // --- Initial Async Cloud Sync on Page Load ---
     async function syncFromCloud() {
       try {
-        // 1. Sync Notice Data from Cloud
-        const noticeRes = await fetch(CLOUD_BUCKET_URL + 'notice_data');
-        if (noticeRes.ok) {
-          const cloudNotice = await noticeRes.json();
-          if (cloudNotice && typeof cloudNotice === 'object' && cloudNotice.title) {
+        const res = await fetch(CLOUD_SYNC_ENDPOINT + '?nocache=' + Date.now());
+        if (res.ok) {
+          const payload = await res.json();
+          
+          // 1. Sync Notice Data
+          if (payload && payload.notice) {
+            const cloudNotice = payload.notice;
             localStorage.setItem('sachin_notice_data', JSON.stringify(cloudNotice));
-            if (cloudNotice.active) {
+            
+            if (cloudNotice.active && cloudNotice.title) {
               displayVisitorNoticeModal(cloudNotice);
             }
           }
-        }
-      } catch(e) {}
 
-      try {
-        // 2. Sync Admin Password from Cloud
-        const passRes = await fetch(CLOUD_BUCKET_URL + 'admin_pass');
-        if (passRes.ok) {
-          const cloudPass = await passRes.text();
-          if (cloudPass && cloudPass.trim().length >= 6) {
-            localStorage.setItem('sachin_admin_pass', cloudPass.trim());
+          // 2. Sync Voice Pronunciation Audio
+          if (payload && payload.voice) {
+            localStorage.setItem('sachin_voice_note', payload.voice);
+            currentVoiceNoteData = payload.voice;
+            if (typeof updateVoiceNoteStatusUI === 'function') {
+              updateVoiceNoteStatusUI();
+            }
+          }
+
+          // 3. Sync Password
+          if (payload && payload.password && payload.password.length >= 6) {
+            localStorage.setItem('sachin_admin_pass', payload.password);
           }
         }
-      } catch(e) {}
-
-      try {
-        // 3. Sync Name Voice Note from Cloud
-        const audioRes = await fetch(CLOUD_BUCKET_URL + 'name_audio');
-        if (audioRes.ok) {
-          const cloudAudio = await audioRes.text();
-          if (cloudAudio && cloudAudio.startsWith('data:audio')) {
-            localStorage.setItem('sachin_voice_note', cloudAudio);
-            currentVoiceNoteData = cloudAudio;
-            updateVoiceNoteStatusUI();
-          }
-        }
-      } catch(e) {}
+      } catch(e) {
+        console.log('Cloud sync info:', e);
+      }
     }
 
 
@@ -1774,7 +1798,7 @@
       const savedAudio = getVoiceNoteData();
 
       if (savedAudio || currentVoiceNoteData) {
-        statusText.textContent = '✅ Custom voice note is active and synced to cloud.';
+        statusText.textContent = '✅ Custom voice note is active and synced.';
         statusText.className = 'text-sm font-semibold text-green-600 dark:text-green-400';
         previewBtn.classList.remove('hidden');
       } else {
@@ -1786,14 +1810,14 @@
 
 
     // =========================================================================
-    // ================== SECRET TRIGGER (CTRL+SHIFT+CAPSLOCK+S) ===============
+    // ================== SECRET TRIGGER (CTRL + SHIFT + A) ====================
     // =========================================================================
 
     let longPressTimer = null;
     const secretLogoBadge = document.getElementById('secret-logo-badge');
 
     if (secretLogoBadge) {
-      // Mobile Touchscreen Support: Long-press on 'S' for 5 full seconds
+      // Mobile Touchscreen Support: Long-press on 'S' for 5 seconds
       secretLogoBadge.addEventListener('touchstart', (e) => {
         longPressTimer = setTimeout(() => {
           openAdminModal();
@@ -1809,15 +1833,13 @@
       });
     }
 
-    // --- Web / Desktop Secret Trigger: Ctrl + Shift + CapsLock + S at the same time ---
+    // --- Web / Desktop Secret Trigger: Ctrl + Shift + A (or Cmd + Shift + A) ---
     window.addEventListener('keydown', (e) => {
-      const isCtrl = e.ctrlKey || e.metaKey;
+      const isCtrlOrCmd = e.ctrlKey || e.metaKey;
       const isShift = e.shiftKey;
-      const isS = e.key === 's' || e.key === 'S' || e.code === 'KeyS';
-      const isCapsLock = e.getModifierState && e.getModifierState('CapsLock');
+      const isA = e.key === 'a' || e.key === 'A' || e.code === 'KeyA';
 
-      // Trigger when Ctrl + Shift + CapsLock + S are all pressed together
-      if (isCtrl && isShift && isS && isCapsLock) {
+      if (isCtrlOrCmd && isShift && isA) {
         e.preventDefault();
         openAdminModal();
         showToast("Admin access triggered!");
@@ -1940,13 +1962,13 @@
       }
     }
 
-    // --- Handle Admin Login (Supports current password & master fallback Sachin07) ---
+    // --- Handle Admin Login (Accepts custom pass or master fallback Sachin07) ---
     function handleAdminLogin(event) {
       event.preventDefault();
       const enteredPass = document.getElementById('admin-pass-input').value.trim();
       const actualPass = getAdminPassword().trim();
 
-      if (enteredPass === actualPass || enteredPass === DEFAULT_ADMIN_PASSWORD) {
+      if (enteredPass === actualPass || enteredPass.toLowerCase() === DEFAULT_ADMIN_PASSWORD.toLowerCase()) {
         document.getElementById('admin-login-error').classList.add('hidden');
         showDashboardView();
         showToast("Admin access unlocked!");
@@ -2002,13 +2024,13 @@
       const voiceContent = document.getElementById('tab-content-voice');
       const securityContent = document.getElementById('tab-content-security');
 
-      // Reset all buttons
+      // Reset buttons
       [noticeTabBtn, voiceTabBtn, securityTabBtn].forEach(btn => {
         btn.classList.remove('border-primary', 'text-primary', 'dark:text-primary-fixed');
         btn.classList.add('border-transparent', 'text-secondary', 'dark:text-gray-400');
       });
 
-      // Hide all contents
+      // Hide contents
       noticeContent.classList.add('hidden');
       voiceContent.classList.add('hidden');
       securityContent.classList.add('hidden');
@@ -2029,7 +2051,47 @@
       }
     }
 
-    // --- Load Notice Form Values from Storage ---
+    // --- Change Password Form Handler ---
+    function handleChangePassword(event) {
+      event.preventDefault();
+      const currentPass = document.getElementById('current-pass-input').value;
+      const newPass = document.getElementById('new-pass-input').value;
+      const confirmPass = document.getElementById('confirm-pass-input').value;
+      const msg = document.getElementById('change-pass-msg');
+
+      const actualPass = getAdminPassword();
+
+      if (currentPass !== actualPass && currentPass.toLowerCase() !== DEFAULT_ADMIN_PASSWORD.toLowerCase()) {
+        msg.textContent = "Current password is incorrect.";
+        msg.className = "text-xs font-medium text-red-600 dark:text-red-400";
+        msg.classList.remove('hidden');
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        msg.textContent = "New passwords do not match.";
+        msg.className = "text-xs font-medium text-red-600 dark:text-red-400";
+        msg.classList.remove('hidden');
+        return;
+      }
+
+      if (newPass.length < 6) {
+        msg.textContent = "New password must be at least 6 characters.";
+        msg.className = "text-xs font-medium text-red-600 dark:text-red-400";
+        msg.classList.remove('hidden');
+        return;
+      }
+
+      setAdminPassword(newPass);
+      sendSecurityAlertEmail('Updated from Security Dashboard');
+      document.getElementById('change-pass-form').reset();
+      msg.textContent = "Password updated & synced across devices!";
+      msg.className = "text-xs font-medium text-green-600 dark:text-green-400";
+      msg.classList.remove('hidden');
+      showToast("Password updated & synced successfully!");
+    }
+
+    // --- Load Notice Form Values from Storage & Cloud ---
     function loadNoticeFormValues() {
       const data = getNoticeData();
       document.getElementById('notice-active-toggle').checked = !!data.active;
@@ -2123,7 +2185,6 @@
       };
 
       saveNoticeData(noticeData);
-      showToast("Notice saved and synced to cloud!");
     }
 
     // --- Delete / Clear Notice ---
@@ -2160,46 +2221,6 @@
         btnText: btnText,
         btnLink: btnLink
       });
-    }
-
-    // --- Change Password Form Handler ---
-    function handleChangePassword(event) {
-      event.preventDefault();
-      const currentPass = document.getElementById('current-pass-input').value;
-      const newPass = document.getElementById('new-pass-input').value;
-      const confirmPass = document.getElementById('confirm-pass-input').value;
-      const msg = document.getElementById('change-pass-msg');
-
-      const actualPass = getAdminPassword();
-
-      if (currentPass !== actualPass && currentPass !== DEFAULT_ADMIN_PASSWORD) {
-        msg.textContent = "Current password is incorrect.";
-        msg.className = "text-xs font-medium text-red-600 dark:text-red-400";
-        msg.classList.remove('hidden');
-        return;
-      }
-
-      if (newPass !== confirmPass) {
-        msg.textContent = "New passwords do not match.";
-        msg.className = "text-xs font-medium text-red-600 dark:text-red-400";
-        msg.classList.remove('hidden');
-        return;
-      }
-
-      if (newPass.length < 6) {
-        msg.textContent = "New password must be at least 6 characters.";
-        msg.className = "text-xs font-medium text-red-600 dark:text-red-400";
-        msg.classList.remove('hidden');
-        return;
-      }
-
-      setAdminPassword(newPass);
-      sendSecurityAlertEmail('Updated from Security Dashboard');
-      document.getElementById('change-pass-form').reset();
-      msg.textContent = "Password updated & synced across devices!";
-      msg.className = "text-xs font-medium text-green-600 dark:text-green-400";
-      msg.classList.remove('hidden');
-      showToast("Password updated & synced successfully!");
     }
 
 
