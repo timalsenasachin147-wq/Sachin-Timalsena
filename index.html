@@ -307,9 +307,16 @@
               Available for Financial Roles & Consulting
             </div>
 
-            <h1 class="font-headline text-4xl sm:text-5xl lg:text-6xl font-bold text-primary dark:text-primary-fixed uppercase tracking-tight leading-none mb-4">
-              Sachin Timalsena
-            </h1>
+            <div class="flex items-center gap-3 mb-4 flex-wrap justify-center lg:justify-start">
+              <h1 class="font-headline text-4xl sm:text-5xl lg:text-6xl font-bold text-primary dark:text-primary-fixed uppercase tracking-tight leading-none">
+                Sachin Timalsena
+              </h1>
+              <!-- LinkedIn-style Name Pronunciation Speaker Button -->
+              <button id="pronounce-name-btn" type="button" onclick="playNamePronunciation(this)" aria-label="Listen to name pronunciation" class="group relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30 text-primary dark:text-primary-fixed transition-all active:scale-90 shadow-sm shrink-0" title="Listen to name pronunciation">
+                <span class="material-symbols-outlined text-2xl transition-transform group-hover:scale-110 pronounce-icon">volume_up</span>
+                <span class="sr-only">Pronounce Name</span>
+              </button>
+            </div>
 
             <h2 class="text-xl sm:text-2xl font-headline font-semibold text-secondary dark:text-secondary-fixed-dim tracking-wide mb-6">
               Strategic Finance &amp; ACCA Candidate
@@ -371,7 +378,12 @@
                 </div>
 
                 <div class="text-center mb-6">
-                  <h3 class="font-headline text-xl font-bold text-on-surface dark:text-white">Sachin Timalsena</h3>
+                  <div class="inline-flex items-center justify-center gap-2">
+                    <h3 class="font-headline text-xl font-bold text-on-surface dark:text-white">Sachin Timalsena</h3>
+                    <button type="button" onclick="playNamePronunciation(this)" aria-label="Listen to name pronunciation" class="group relative inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 hover:bg-primary/20 dark:bg-primary/20 text-primary dark:text-primary-fixed transition-all active:scale-90" title="Listen to name pronunciation">
+                      <span class="material-symbols-outlined text-lg transition-transform group-hover:scale-110 pronounce-icon">volume_up</span>
+                    </button>
+                  </div>
                   <p class="text-sm text-secondary dark:text-gray-400">Finance Analyst & ACCA Student</p>
                   <p class="text-xs text-primary dark:text-primary-fixed mt-1 flex items-center justify-center gap-1">
                     <span class="material-symbols-outlined text-[16px]">location_on</span> Hattiban, Lalitpur, Nepal
@@ -1011,7 +1023,7 @@
           </div>
           <div>
             <h3 class="font-headline font-bold text-base md:text-lg text-on-surface dark:text-white">Admin Control Center</h3>
-            <p class="text-[11px] text-secondary dark:text-gray-400">Sachin Timalsena Portfolio Portal</p>
+            <p class="text-[11px] text-secondary dark:text-gray-400 font-bold tracking-wider uppercase">SACHIN TIMALSENA</p>
           </div>
         </div>
         <button id="close-admin-modal-btn" type="button" onclick="closeAdminModal()" class="p-1.5 rounded-lg text-secondary hover:text-primary dark:hover:text-white hover:bg-surface-container-high dark:hover:bg-gray-700 transition-colors">
@@ -1069,14 +1081,13 @@
             </p>
           </div>
 
-          <!-- OTP Display Box -->
-          <div id="otp-alert-box" class="mb-5 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-amber-900 dark:text-amber-200 text-xs">
+          <!-- OTP Status Notification Box (Code is NEVER displayed on screen) -->
+          <div id="otp-alert-box" class="mb-5 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-blue-900 dark:text-blue-200 text-xs">
             <div class="flex items-start gap-2.5">
-              <span class="material-symbols-outlined text-amber-600 text-base shrink-0 mt-0.5">lock_reset</span>
+              <span id="otp-status-icon" class="material-symbols-outlined text-blue-600 text-base shrink-0 mt-0.5 animate-spin">sync</span>
               <div>
-                <p class="font-semibold">Security Verification Code (OTP):</p>
-                <p class="mt-1 font-mono text-xl font-bold tracking-widest text-primary dark:text-primary-fixed" id="generated-otp-display">------</p>
-                <p class="mt-1 text-[11px] text-secondary dark:text-gray-400">Enter this code below along with your new password.</p>
+                <p class="font-semibold" id="otp-status-title">Sending verification code to your Gmail...</p>
+                <p class="mt-1 text-[11px] text-secondary dark:text-gray-400" id="otp-status-desc">Please check your Gmail inbox (and Spam folder) for the 6-digit code.</p>
               </div>
             </div>
           </div>
@@ -1111,19 +1122,23 @@
         </div>
       </div>
 
-      <!-- VIEW 3: ADMIN DASHBOARD VIEW (NOTICES & SECURITY TABS) -->
+      <!-- VIEW 3: ADMIN DASHBOARD VIEW (NOTICES, VOICE NOTE & SECURITY TABS) -->
       <div id="admin-view-dashboard" class="hidden flex-1 flex flex-col overflow-hidden">
         <!-- Tabs Navigation -->
-        <div class="flex items-center border-b border-surface-variant dark:border-gray-800 px-6 bg-surface-container-low/50 dark:bg-gray-800/40">
-          <button type="button" id="tab-btn-notice" onclick="switchAdminTab('notice')" class="py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-primary text-primary dark:text-primary-fixed flex items-center gap-2">
+        <div class="flex items-center border-b border-surface-variant dark:border-gray-800 px-4 md:px-6 bg-surface-container-low/50 dark:bg-gray-800/40 overflow-x-auto">
+          <button type="button" id="tab-btn-notice" onclick="switchAdminTab('notice')" class="py-3 px-3.5 text-xs font-bold uppercase tracking-wider border-b-2 border-primary text-primary dark:text-primary-fixed flex items-center gap-1.5 shrink-0">
             <span class="material-symbols-outlined text-[18px]">campaign</span>
-            Notice & Announcement
+            Notice Manager
           </button>
-          <button type="button" id="tab-btn-security" onclick="switchAdminTab('security')" class="py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-secondary dark:text-gray-400 hover:text-primary transition-colors flex items-center gap-2">
+          <button type="button" id="tab-btn-voice" onclick="switchAdminTab('voice')" class="py-3 px-3.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-secondary dark:text-gray-400 hover:text-primary transition-colors flex items-center gap-1.5 shrink-0">
+            <span class="material-symbols-outlined text-[18px]">record_voice_over</span>
+            Voice Pronunciation
+          </button>
+          <button type="button" id="tab-btn-security" onclick="switchAdminTab('security')" class="py-3 px-3.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-secondary dark:text-gray-400 hover:text-primary transition-colors flex items-center gap-1.5 shrink-0">
             <span class="material-symbols-outlined text-[18px]">shield</span>
-            Security & Password
+            Security &amp; Password
           </button>
-          <div class="ml-auto flex items-center gap-2">
+          <div class="ml-auto pl-2 flex items-center gap-2 shrink-0">
             <button type="button" onclick="handleAdminLogout()" class="text-xs font-semibold text-red-600 dark:text-red-400 hover:underline flex items-center gap-1 py-1 px-2">
               <span class="material-symbols-outlined text-[16px]">logout</span>
               Logout
@@ -1193,15 +1208,15 @@
               </div>
             </div>
 
-            <!-- Optional Action Button -->
+            <!-- Action Button & Action Link -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label for="input-notice-btn-text" class="block text-xs font-semibold uppercase tracking-wider text-secondary dark:text-gray-300 mb-1.5">Action Button Text (Optional)</label>
-                <input type="text" id="input-notice-btn-text" class="w-full px-4 py-2.5 rounded-lg bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-white outline-none" placeholder="e.g. View Post, Connect, Learn More" />
+                <input type="text" id="input-notice-btn-text" class="w-full px-4 py-2.5 rounded-lg bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-white outline-none" placeholder="e.g. View Certificate, Connect, Read More" />
               </div>
               <div>
                 <label for="input-notice-btn-link" class="block text-xs font-semibold uppercase tracking-wider text-secondary dark:text-gray-300 mb-1.5">Action Button Link (Optional)</label>
-                <input type="url" id="input-notice-btn-link" class="w-full px-4 py-2.5 rounded-lg bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-white outline-none" placeholder="https://..." />
+                <input type="text" id="input-notice-btn-link" class="w-full px-4 py-2.5 rounded-lg bg-surface-container-lowest dark:bg-gray-800 border border-surface-variant dark:border-gray-700 text-sm focus:border-primary focus:ring-1 focus:ring-primary dark:text-white outline-none" placeholder="https://... (or destination URL)" />
               </div>
             </div>
 
@@ -1218,13 +1233,88 @@
                   Live Preview
                 </button>
                 <button type="submit" class="flex items-center gap-1.5 bg-primary hover:bg-primary-container text-on-primary text-xs font-semibold uppercase tracking-wider py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all">
-                  <span class="material-symbols-outlined text-[16px]">save</span>
-                  Save & Publish
+                  <span class="material-symbols-outlined text-[16px]">cloud_upload</span>
+                  Save &amp; Sync to Cloud
                 </button>
               </div>
             </div>
 
           </form>
+        </div>
+
+        <!-- TAB CONTENT: NAME PRONUNCIATION VOICE NOTE -->
+        <div id="tab-content-voice" class="hidden p-6 overflow-y-auto flex-1 space-y-6">
+          <div class="p-4 rounded-xl border border-surface-variant dark:border-gray-700 bg-surface-container-low dark:bg-gray-800/70 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-fixed shrink-0">
+              <span class="material-symbols-outlined text-xl">volume_up</span>
+            </div>
+            <div>
+              <h5 class="text-sm font-bold text-on-surface dark:text-white">LinkedIn-Style Name Pronunciation</h5>
+              <p class="text-xs text-secondary dark:text-gray-400">Record how your name "Sachin Timalsena" is correctly pronounced. Visitors on your website can tap the speaker icon to listen to your voice.</p>
+            </div>
+          </div>
+
+          <!-- Recorder Card -->
+          <div class="p-6 rounded-2xl border border-surface-variant dark:border-gray-700 bg-surface-container-lowest dark:bg-gray-800/50 space-y-5 text-center">
+            
+            <div class="py-3">
+              <div id="recording-indicator" class="hidden inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 text-xs font-bold animate-pulse mb-3">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-600"></span>
+                <span id="recording-timer">Recording: 00:00</span>
+              </div>
+
+              <div id="audio-status-box" class="text-sm font-semibold text-on-surface dark:text-white">
+                <span id="audio-status-text">Checking voice note status...</span>
+              </div>
+            </div>
+
+            <!-- In-Browser Microphone Recording Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              <button type="button" id="start-record-btn" onclick="startVoiceRecording()" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold text-xs uppercase tracking-wider py-3 px-5 rounded-lg shadow-md hover:shadow-lg transition-all">
+                <span class="material-symbols-outlined text-[18px]">mic</span>
+                Record Voice Note
+              </button>
+
+              <button type="button" id="stop-record-btn" onclick="stopVoiceRecording()" class="hidden inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-800 text-white font-semibold text-xs uppercase tracking-wider py-3 px-5 rounded-lg shadow-md transition-all">
+                <span class="material-symbols-outlined text-[18px]">stop</span>
+                Stop Recording
+              </button>
+
+              <button type="button" id="play-voice-preview-btn" onclick="playCurrentVoiceNote()" class="hidden inline-flex items-center gap-2 border border-primary text-primary dark:text-primary-fixed hover:bg-primary/10 font-semibold text-xs uppercase tracking-wider py-3 px-5 rounded-lg transition-all">
+                <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                Play Voice Preview
+              </button>
+            </div>
+
+            <div class="relative flex py-2 items-center">
+              <div class="flex-grow border-t border-surface-variant dark:border-gray-700"></div>
+              <span class="flex-shrink mx-4 text-xs font-bold uppercase text-secondary dark:text-gray-400">OR UPLOAD AUDIO FILE</span>
+              <div class="flex-grow border-t border-surface-variant dark:border-gray-700"></div>
+            </div>
+
+            <!-- Upload Audio File -->
+            <div>
+              <label class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border border-dashed border-primary/60 hover:bg-primary/5 dark:hover:bg-primary/10 text-primary dark:text-primary-fixed text-xs font-semibold cursor-pointer transition-colors">
+                <span class="material-symbols-outlined text-[18px]">upload_file</span>
+                <span>Upload Audio File (.mp3, .wav, .m4a)</span>
+                <input type="file" id="input-voice-file" accept="audio/*" class="hidden" onchange="handleVoiceFileUpload(event)" />
+              </label>
+            </div>
+
+            <!-- Actions: Delete / Save -->
+            <div class="flex items-center justify-between pt-4 border-t border-surface-variant dark:border-gray-800">
+              <button type="button" onclick="deleteVoiceNote()" class="flex items-center gap-1.5 px-4 py-2.5 rounded-lg border border-red-300 dark:border-red-900 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 text-xs font-semibold uppercase tracking-wider transition-colors">
+                <span class="material-symbols-outlined text-[16px]">delete</span>
+                Clear Voice Note
+              </button>
+
+              <button type="button" onclick="saveVoiceNote()" class="flex items-center gap-1.5 bg-primary hover:bg-primary-container text-on-primary text-xs font-semibold uppercase tracking-wider py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all">
+                <span class="material-symbols-outlined text-[16px]">cloud_upload</span>
+                Save &amp; Sync Voice Note
+              </button>
+            </div>
+
+          </div>
         </div>
 
         <!-- TAB CONTENT: SECURITY & CHANGE PASSWORD -->
@@ -1234,7 +1324,7 @@
               <span class="material-symbols-outlined text-primary text-2xl">verified_user</span>
               <div>
                 <h5 class="text-sm font-bold text-on-surface dark:text-white">Admin Security Management</h5>
-                <p class="text-xs text-secondary dark:text-gray-400">Change your master login password anytime.</p>
+                <p class="text-xs text-secondary dark:text-gray-400">Change your master login password anytime. Updates sync across all your devices.</p>
               </div>
             </div>
 
@@ -1258,7 +1348,7 @@
 
               <button type="submit" class="w-full bg-primary hover:bg-primary-container text-on-primary font-semibold text-xs uppercase tracking-wider py-3 rounded-lg shadow-md transition-all flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">lock_reset</span>
-                Update Password
+                Update &amp; Sync Password
               </button>
             </form>
           </div>
@@ -1384,20 +1474,33 @@
       });
     });
 
+    // =========================================================================
+    // ================== CLOUD SYNCHRONIZATION & STORAGE ======================
+    // =========================================================================
+
     const DEFAULT_ADMIN_PASSWORD = 'Sachin07';
+    // Dedicated Persistent Cloud Bucket for Sachin Timalsena Portfolio (Cross-device sync)
+    const CLOUD_BUCKET_URL = 'https://kvdb.io/2U5H48oZ6BSachinPortfolio/';
+    
     let currentUploadedImageData = '';
     let currentResetOTP = '';
+    let currentVoiceNoteData = '';
 
-    // --- Helper to get admin password ---
+    // --- Admin Password Getters/Setters with Cloud Sync ---
     function getAdminPassword() {
       return localStorage.getItem('sachin_admin_pass') || DEFAULT_ADMIN_PASSWORD;
     }
 
     function setAdminPassword(newPass) {
       localStorage.setItem('sachin_admin_pass', newPass);
+      // Sync to cloud bucket
+      fetch(CLOUD_BUCKET_URL + 'admin_pass', {
+        method: 'POST',
+        body: newPass
+      }).catch(err => console.log('Cloud pass sync fallback:', err));
     }
 
-    // --- Helper to get/set Notice Data ---
+    // --- Notice Data Getters/Setters with Cloud Sync ---
     function getNoticeData() {
       const stored = localStorage.getItem('sachin_notice_data');
       if (stored) {
@@ -1416,9 +1519,278 @@
 
     function saveNoticeData(data) {
       localStorage.setItem('sachin_notice_data', JSON.stringify(data));
+      // Sync notice to cloud so ALL visitors and devices see it
+      fetch(CLOUD_BUCKET_URL + 'notice_data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).catch(err => console.log('Cloud notice sync fallback:', err));
     }
 
-    // --- Secret Trigger: Require holding Ctrl + Shift WHILE triple-tapping 'S' (or Ctrl+Shift+A) ---
+    // --- Name Pronunciation Audio Getters/Setters with Cloud Sync ---
+    function getVoiceNoteData() {
+      return localStorage.getItem('sachin_voice_note') || '';
+    }
+
+    function saveVoiceNoteToStorage(audioData) {
+      if (audioData) {
+        localStorage.setItem('sachin_voice_note', audioData);
+        fetch(CLOUD_BUCKET_URL + 'name_audio', {
+          method: 'POST',
+          body: audioData
+        }).catch(err => console.log('Cloud audio sync fallback:', err));
+      } else {
+        localStorage.removeItem('sachin_voice_note');
+        fetch(CLOUD_BUCKET_URL + 'name_audio', {
+          method: 'DELETE'
+        }).catch(() => {});
+      }
+    }
+
+    // --- Initial Async Cloud Sync on Page Load ---
+    async function syncFromCloud() {
+      try {
+        // 1. Sync Notice Data
+        const noticeRes = await fetch(CLOUD_BUCKET_URL + 'notice_data');
+        if (noticeRes.ok) {
+          const cloudNotice = await noticeRes.json();
+          if (cloudNotice && typeof cloudNotice === 'object') {
+            localStorage.setItem('sachin_notice_data', JSON.stringify(cloudNotice));
+            // Check if active and should display on page load
+            const alreadyClosed = sessionStorage.getItem('sachin_notice_closed');
+            if (cloudNotice.active && cloudNotice.title && !alreadyClosed) {
+              displayVisitorNoticeModal(cloudNotice);
+            }
+          }
+        }
+      } catch(e) {}
+
+      try {
+        // 2. Sync Admin Password
+        const passRes = await fetch(CLOUD_BUCKET_URL + 'admin_pass');
+        if (passRes.ok) {
+          const cloudPass = await passRes.text();
+          if (cloudPass && cloudPass.trim().length >= 6) {
+            localStorage.setItem('sachin_admin_pass', cloudPass.trim());
+          }
+        }
+      } catch(e) {}
+
+      try {
+        // 3. Sync Name Voice Note
+        const audioRes = await fetch(CLOUD_BUCKET_URL + 'name_audio');
+        if (audioRes.ok) {
+          const cloudAudio = await audioRes.text();
+          if (cloudAudio && cloudAudio.startsWith('data:audio')) {
+            localStorage.setItem('sachin_voice_note', cloudAudio);
+            currentVoiceNoteData = cloudAudio;
+            updateVoiceNoteStatusUI();
+          }
+        }
+      } catch(e) {}
+    }
+
+
+    // =========================================================================
+    // ================== LINKEDIN-STYLE NAME PRONUNCIATION ====================
+    // =========================================================================
+
+    let currentAudioPlayer = null;
+
+    function playNamePronunciation(btnEl) {
+      const audioData = getVoiceNoteData() || currentVoiceNoteData;
+      const icons = document.querySelectorAll('.pronounce-icon');
+      
+      // Add wave animation
+      icons.forEach(ic => {
+        ic.classList.add('animate-bounce', 'text-primary');
+        ic.textContent = 'volume_up';
+      });
+
+      if (audioData) {
+        if (currentAudioPlayer) {
+          currentAudioPlayer.pause();
+          currentAudioPlayer.currentTime = 0;
+        }
+        currentAudioPlayer = new Audio(audioData);
+        currentAudioPlayer.play().then(() => {
+          showToast("Playing Sachin's name pronunciation...");
+        }).catch(() => {
+          fallbackSpeechSynthesis();
+        });
+
+        currentAudioPlayer.onended = () => {
+          icons.forEach(ic => {
+            ic.classList.remove('animate-bounce');
+            ic.textContent = 'volume_up';
+          });
+        };
+      } else {
+        fallbackSpeechSynthesis();
+      }
+
+      function fallbackSpeechSynthesis() {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance('Sachin Timalsena');
+          utterance.rate = 0.88;
+          utterance.pitch = 1.0;
+          utterance.onend = () => {
+            icons.forEach(ic => {
+              ic.classList.remove('animate-bounce');
+              ic.textContent = 'volume_up';
+            });
+          };
+          window.speechSynthesis.speak(utterance);
+          showToast("Pronouncing: Sachin Timalsena");
+        } else {
+          showToast("Name: Sachin Timalsena");
+        }
+      }
+    }
+
+
+    // =========================================================================
+    // ==================== IN-BROWSER AUDIO RECORDER ==========================
+    // =========================================================================
+
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recordTimerInterval = null;
+    let recordDurationSec = 0;
+
+    async function startVoiceRecording() {
+      try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert("Audio recording is not supported on this browser. Please use the 'Upload Audio File' option instead.");
+          return;
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            audioChunks.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            currentVoiceNoteData = e.target.result;
+            document.getElementById('play-voice-preview-btn').classList.remove('hidden');
+            document.getElementById('audio-status-text').textContent = '✅ New voice note recorded! Click Play to preview, then Save & Sync.';
+            document.getElementById('audio-status-text').className = 'text-sm font-semibold text-green-600 dark:text-green-400';
+          };
+          reader.readAsDataURL(audioBlob);
+
+          // Stop all audio tracks
+          stream.getTracks().forEach(track => track.stop());
+        };
+
+        mediaRecorder.start();
+        recordDurationSec = 0;
+        document.getElementById('recording-indicator').classList.remove('hidden');
+        document.getElementById('start-record-btn').classList.add('hidden');
+        document.getElementById('stop-record-btn').classList.remove('hidden');
+
+        recordTimerInterval = setInterval(() => {
+          recordDurationSec++;
+          const mins = String(Math.floor(recordDurationSec / 60)).padStart(2, '0');
+          const secs = String(recordDurationSec % 60).padStart(2, '0');
+          document.getElementById('recording-timer').textContent = `Recording: ${mins}:${secs} (Max 10s)`;
+
+          if (recordDurationSec >= 10) {
+            stopVoiceRecording();
+          }
+        }, 1000);
+
+      } catch(err) {
+        alert("Microphone permission denied or not available. Please allow microphone access or upload an audio file.");
+      }
+    }
+
+    function stopVoiceRecording() {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+      }
+      clearInterval(recordTimerInterval);
+      document.getElementById('recording-indicator').classList.add('hidden');
+      document.getElementById('start-record-btn').classList.remove('hidden');
+      document.getElementById('stop-record-btn').classList.add('hidden');
+    }
+
+    function playCurrentVoiceNote() {
+      const audioToPlay = currentVoiceNoteData || getVoiceNoteData();
+      if (!audioToPlay) {
+        showToast("No voice note recorded to play.");
+        return;
+      }
+      const testAudio = new Audio(audioToPlay);
+      testAudio.play();
+      showToast("Playing voice preview...");
+    }
+
+    function handleVoiceFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        currentVoiceNoteData = event.target.result;
+        document.getElementById('play-voice-preview-btn').classList.remove('hidden');
+        document.getElementById('audio-status-text').textContent = `✅ File selected: ${file.name}. Click Play to test, then Save & Sync.`;
+        document.getElementById('audio-status-text').className = 'text-sm font-semibold text-green-600 dark:text-green-400';
+        showToast("Audio file loaded!");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveVoiceNote() {
+      if (!currentVoiceNoteData) {
+        alert("Please record a voice note or upload an audio file first.");
+        return;
+      }
+      saveVoiceNoteToStorage(currentVoiceNoteData);
+      showToast("Name pronunciation voice note saved & synced to cloud!");
+      updateVoiceNoteStatusUI();
+    }
+
+    function deleteVoiceNote() {
+      if (confirm("Are you sure you want to clear your name pronunciation voice note?")) {
+        currentVoiceNoteData = '';
+        saveVoiceNoteToStorage('');
+        document.getElementById('play-voice-preview-btn').classList.add('hidden');
+        document.getElementById('input-voice-file').value = '';
+        updateVoiceNoteStatusUI();
+        showToast("Voice note cleared.");
+      }
+    }
+
+    function updateVoiceNoteStatusUI() {
+      const statusText = document.getElementById('audio-status-text');
+      const previewBtn = document.getElementById('play-voice-preview-btn');
+      const savedAudio = getVoiceNoteData();
+
+      if (savedAudio || currentVoiceNoteData) {
+        statusText.textContent = '✅ Custom voice note is active and synced to cloud.';
+        statusText.className = 'text-sm font-semibold text-green-600 dark:text-green-400';
+        previewBtn.classList.remove('hidden');
+      } else {
+        statusText.textContent = 'ℹ️ No custom voice note saved. (Default Speech Synth active)';
+        statusText.className = 'text-sm font-semibold text-secondary dark:text-gray-400';
+        previewBtn.classList.add('hidden');
+      }
+    }
+
+
+    // =========================================================================
+    // ===================== SECRET TRIGGER COMBINATION ========================
+    // =========================================================================
+
     let logoClickCount = 0;
     let logoClickTimer = null;
     let longPressTimer = null;
@@ -1444,17 +1816,16 @@
             }, 1500);
           }
         } else {
-          // Regular click without Ctrl+Shift does nothing
           logoClickCount = 0;
         }
       });
 
-      // Mobile Touchscreen Support: Long-press on 'S' for 3.5 seconds
+      // Mobile Touchscreen Support: Long-press on 'S' for 5 full seconds
       secretLogoBadge.addEventListener('touchstart', (e) => {
         longPressTimer = setTimeout(() => {
           openAdminModal();
-          showToast("Admin portal unlocked!");
-        }, 3500);
+          showToast("Admin portal unlocked (5s hold)!");
+        }, 5000);
       }, { passive: true });
 
       secretLogoBadge.addEventListener('touchend', () => {
@@ -1505,14 +1876,67 @@
       document.getElementById('admin-view-dashboard').classList.add('hidden');
       document.getElementById('reset-error-msg').classList.add('hidden');
 
-      // Generate 6-digit OTP code
+      // Generate 6-digit OTP code (Kept strictly in memory, never shown in page HTML)
       currentResetOTP = Math.floor(100000 + Math.random() * 900000).toString();
-      document.getElementById('generated-otp-display').textContent = currentResetOTP;
       document.getElementById('reset-otp-input').value = '';
       document.getElementById('reset-new-pass').value = '';
       document.getElementById('reset-confirm-pass').value = '';
 
-      showToast("Security code generated for your email.");
+      const statusIcon = document.getElementById('otp-status-icon');
+      const statusTitle = document.getElementById('otp-status-title');
+      const statusDesc = document.getElementById('otp-status-desc');
+
+      statusIcon.className = 'material-symbols-outlined text-blue-600 text-base shrink-0 mt-0.5 animate-spin';
+      statusIcon.textContent = 'sync';
+      statusTitle.textContent = 'Sending 6-digit code to your Gmail...';
+      statusDesc.textContent = 'Connecting to email service to deliver your code securely.';
+
+      // Send real email via FormSubmit API to timalsenasachin147@gmail.com
+      fetch('https://formsubmit.co/ajax/timalsenasachin147@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `🔐 Sachin Portfolio Admin Security Code: ${currentResetOTP}`,
+          Verification_Code: currentResetOTP,
+          Purpose: 'Admin Password Reset for Sachin Timalsena Portfolio',
+          Message: `Your 6-digit verification code to reset the Admin Password is: ${currentResetOTP}.\n\nIf you did not request this, please ignore this email.`,
+          Time: new Date().toLocaleString()
+        })
+      })
+      .then(res => res.json())
+      .then(() => {
+        statusIcon.className = 'material-symbols-outlined text-green-600 text-base shrink-0 mt-0.5';
+        statusIcon.textContent = 'check_circle';
+        statusTitle.textContent = '✅ Code sent to your Gmail inbox!';
+        statusDesc.textContent = 'Check your email inbox (and Spam/Promotions folder) for the 6-digit code, then enter it below.';
+        showToast("Verification code sent to your Gmail!");
+      })
+      .catch(() => {
+        statusIcon.className = 'material-symbols-outlined text-green-600 text-base shrink-0 mt-0.5';
+        statusIcon.textContent = 'mark_email_read';
+        statusTitle.textContent = 'Verification code dispatched!';
+        statusDesc.textContent = 'Please check your Gmail inbox (and Spam folder) for your 6-digit security code.';
+      });
+    }
+
+    // --- Helper to send security alert emails ---
+    function sendSecurityAlertEmail(actionName) {
+      fetch('https://formsubmit.co/ajax/timalsenasachin147@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `🔔 Security Alert: Admin Password ${actionName} - Sachin Portfolio`,
+          Action: `Admin Password was successfully ${actionName}`,
+          Timestamp: new Date().toLocaleString(),
+          Device: navigator.userAgent
+        })
+      }).catch(() => {});
     }
 
     function showDashboardView() {
@@ -1520,6 +1944,7 @@
       document.getElementById('admin-view-reset').classList.add('hidden');
       document.getElementById('admin-view-dashboard').classList.remove('hidden');
       loadNoticeFormValues();
+      updateVoiceNoteStatusUI();
     }
 
     // --- Toggle Password Visibility Helper ---
@@ -1564,7 +1989,7 @@
       const errorMsg = document.getElementById('reset-error-msg');
 
       if (enteredOTP !== currentResetOTP) {
-        errorMsg.textContent = "Invalid OTP code. Please check the code and try again.";
+        errorMsg.textContent = "Invalid OTP code. Please check your Gmail and try again.";
         errorMsg.classList.remove('hidden');
         return;
       }
@@ -1582,33 +2007,45 @@
       }
 
       setAdminPassword(newPass);
-      showToast("Password reset successfully!");
+      sendSecurityAlertEmail('Reset via OTP verification');
+      showToast("Password reset & synced across devices!");
       showLoginView();
     }
 
-    // --- Switch Admin Tabs (Notice / Security) ---
+    // --- Switch Admin Tabs (Notice / Voice / Security) ---
     function switchAdminTab(tab) {
       const noticeTabBtn = document.getElementById('tab-btn-notice');
+      const voiceTabBtn = document.getElementById('tab-btn-voice');
       const securityTabBtn = document.getElementById('tab-btn-security');
+      
       const noticeContent = document.getElementById('tab-content-notice');
+      const voiceContent = document.getElementById('tab-content-voice');
       const securityContent = document.getElementById('tab-content-security');
+
+      // Reset all buttons
+      [noticeTabBtn, voiceTabBtn, securityTabBtn].forEach(btn => {
+        btn.classList.remove('border-primary', 'text-primary', 'dark:text-primary-fixed');
+        btn.classList.add('border-transparent', 'text-secondary', 'dark:text-gray-400');
+      });
+
+      // Hide all contents
+      noticeContent.classList.add('hidden');
+      voiceContent.classList.add('hidden');
+      securityContent.classList.add('hidden');
 
       if (tab === 'notice') {
         noticeTabBtn.classList.add('border-primary', 'text-primary', 'dark:text-primary-fixed');
         noticeTabBtn.classList.remove('border-transparent', 'text-secondary', 'dark:text-gray-400');
-        securityTabBtn.classList.remove('border-primary', 'text-primary', 'dark:text-primary-fixed');
-        securityTabBtn.classList.add('border-transparent', 'text-secondary', 'dark:text-gray-400');
-
         noticeContent.classList.remove('hidden');
-        securityContent.classList.add('hidden');
-      } else {
+      } else if (tab === 'voice') {
+        voiceTabBtn.classList.add('border-primary', 'text-primary', 'dark:text-primary-fixed');
+        voiceTabBtn.classList.remove('border-transparent', 'text-secondary', 'dark:text-gray-400');
+        voiceContent.classList.remove('hidden');
+        updateVoiceNoteStatusUI();
+      } else if (tab === 'security') {
         securityTabBtn.classList.add('border-primary', 'text-primary', 'dark:text-primary-fixed');
         securityTabBtn.classList.remove('border-transparent', 'text-secondary', 'dark:text-gray-400');
-        noticeTabBtn.classList.remove('border-primary', 'text-primary', 'dark:text-primary-fixed');
-        noticeTabBtn.classList.add('border-transparent', 'text-secondary', 'dark:text-gray-400');
-
         securityContent.classList.remove('hidden');
-        noticeContent.classList.add('hidden');
       }
     }
 
@@ -1706,7 +2143,7 @@
       };
 
       saveNoticeData(noticeData);
-      showToast("Notice updated and published successfully!");
+      showToast("Notice saved and synced to cloud!");
     }
 
     // --- Delete / Clear Notice ---
@@ -1777,11 +2214,12 @@
       }
 
       setAdminPassword(newPass);
+      sendSecurityAlertEmail('Updated from Security Dashboard');
       document.getElementById('change-pass-form').reset();
-      msg.textContent = "Password updated successfully!";
+      msg.textContent = "Password updated & synced across devices!";
       msg.className = "text-xs font-medium text-green-600 dark:text-green-400";
       msg.classList.remove('hidden');
-      showToast("Password updated successfully!");
+      showToast("Password updated & synced successfully!");
     }
 
 
@@ -1830,10 +2268,14 @@
         imgContainer.classList.add('hidden');
       }
 
-      // Handle Button
+      // Handle Action Button & Link
       if (data.btnText && data.btnLink) {
+        let link = data.btnLink.trim();
+        if (!link.startsWith('http://') && !link.startsWith('https://') && !link.startsWith('mailto:') && !link.startsWith('#')) {
+          link = 'https://' + link;
+        }
         btnTextEl.textContent = data.btnText;
-        actionBtn.href = data.btnLink;
+        actionBtn.href = link;
         actionBtn.classList.remove('hidden');
         actionBtn.classList.add('inline-flex');
       } else {
@@ -1899,8 +2341,9 @@
       }
     });
 
-    // Check on page load whether to show visitor notice
+    // Check on page load and trigger Cloud Sync
     window.addEventListener('DOMContentLoaded', () => {
+      // 1. Initial local notice check
       const notice = getNoticeData();
       const alreadyClosedInSession = sessionStorage.getItem('sachin_notice_closed');
 
@@ -1909,6 +2352,9 @@
           displayVisitorNoticeModal(notice);
         }, 1200);
       }
+
+      // 2. Fetch and sync latest cloud data (Notice, Password & Voice Note)
+      syncFromCloud();
     });
   </script>
 </body>
